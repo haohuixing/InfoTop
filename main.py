@@ -66,3 +66,9 @@ if __name__ == "__main__":
             print(f"❌ Error with {stock}: {e}")
 
     print("\n--- ALL DONE! Check pgAdmin for your data. ---")
+
+    # Add this to the bottom of your 'if __name__ == "__main__":' block
+    with engine.connect() as conn:
+        result = pd.read_sql("SELECT ticker, end, val, revenue_yoy_growth FROM revenue_tracker WHERE revenue_yoy_growth IS NOT NULL LIMIT 5", conn)
+        print("\n--- DATABASE PREVIEW ---")
+        print(result)
