@@ -11,10 +11,9 @@ SEC_ID = os.getenv("SEC_IDENTITY")
 if not SEC_ID:
     print("❌ SEC_IDENTITY not found in .env")
     exit()
-
 set_identity(SEC_ID)
 
-# 2. SECURE DATABASE CONNECTION
+# 2. DATABASE CONNECTION
 connection_url = URL.create(
     drivername="postgresql",
     username=os.getenv("DB_USER"),
@@ -25,90 +24,90 @@ connection_url = URL.create(
 )
 engine = create_engine(connection_url)
 
-# 3. REVENUE TAGS (SEC uses these for "Top Line" Revenue)
-REVENUE_TAGS = ["Revenues", "SalesRevenueNet", "SalesRevenueGoodsNet", "RevenueFromContractWithCustomerExcludingAssessedTax"]
+# The most common SEC tags for Revenue
+REVENUE_TAGS = ["Revenues", "SalesRevenueNet", "RevenueFromContractWithCustomerExcludingAssessedTax", "SalesRevenueGoodsNet"]
 
 def sync_revenue(ticker):
     print(f"🚀 Processing {ticker}...")
     company = Company(ticker)
     
-    # NEW: The most robust way to get facts in the latest edgartools
+    # Get all facts for the company
     facts = company.get_facts()
     
-    # Convert facts to a DataFrame. Some versions use .to_pandas(), others .to_dataframe()
-    # We use a helper to find the right one.
-    if hasattr(facts, 'to_pandas'):
-        df = facts.to_pandas()
-    elif hasattr(facts, 'to_dataframe'):
-        df = facts.to_dataframe()
-    else:
-        # Fallback for very new versions that require a query first
-        df = facts.query().to_pandas()
+    # We will try to find a match from our REVENUE_TAGS list
+    revenue_df = None
+    found_tag = None
 
-    if df is None or df.empty:
-        print(f"⚠️ No facts found for {ticker}")
-        return
+    for tag in REVENUE_TAGS:
+        try:
+            # This is the most reliable way to get a specific concept
+            data = facts.get_concept('us-gaap', tag)
+            if data is not None:
+                df = data.to_pandas()
+                if not df.empty:
+                    revenue_df = df
+                    found_tag = tag
+                    break # Stop once we find a valid revenue tag
+        except:
+            continue
 
-    # LOGIC FIX: Some SEC facts don't include 'form' directly in the table. 
-    # We will filter by common timeframes instead (Quarterly/Annual)
-    # We want to make sure we have columns: 'fact', 'val', 'end', and 'fp'
-    
-    # Ensure column names are standardized (case-insensitive check)
-    df.columns = [c.lower() for c in df.columns]
-    
-    # Target columns (handling variations in naming like 'value' vs 'val')
-    col_map = {'value': 'val', 'date': 'end', 'period_end': 'end'}
-    df = df.rename(columns=col_map)
-
-    # Filter for Revenue Tags
-    df = df[df['fact'].isin(REVENUE_TAGS)].copy()
-    
-    if df.empty:
+    if revenue_df is None:
         print(f"⚠️ No revenue tags found for {ticker}")
         return
 
-    # Drop duplicates to keep the "cleanest" timeline
-    df = df.drop_duplicates(subset=['end'])
-    df['end'] = pd.to_datetime(df['end'])
-    df = df.sort_values('end')
-    
-    # Calculate Year-over-Year Growth (comparing same quarter last year)
-    df['revenue_yoy_growth'] = df['val'].pct_change(periods=4) * 100
-    df['ticker'] = ticker
+    # Standardize column names (Edgar can return 'val' or 'value', 'end' or 'date')
+    revenue_df.columns = [c.lower() for c in revenue_df.columns]
+    col_map = {'value': 'val', 'date': 'end'}
+    revenue_df = revenue_df.rename(columns=col_map)
 
-    # Rename 'end' to 'period_end' to avoid Postgres SQL keywords
-    df = df.rename(columns={'end': 'period_end'})
+    # Filter for standard filings (10-K, 10-Q) if the column exists
+    if 'form' in revenue_df.columns:
+        revenue_df = revenue_df[revenue_df['form'].isin(['10-K', '10-Q'])].copy()
+
+    # Drop duplicates on the end date
+    revenue_df = revenue_df.drop_duplicates(subset=['end'])
+    revenue_df['end'] = pd.to_datetime(revenue_df['end'])
+    revenue_df = revenue_df.sort_values('end')
+
+    # Calculate Growth (comparing to same quarter/period 1 year ago)
+    # Note: Using periods=4 for quarterly data
+    revenue_df['revenue_yoy_growth'] = revenue_df['val'].pct_change(periods=4) * 100
+    revenue_df['ticker'] = ticker
+    revenue_df['fact_used'] = found_tag
+
+    # Rename 'end' to 'period_end' for Postgres safety
+    revenue_df = revenue_df.rename(columns={'end': 'period_end'})
 
     # SAVE TO POSTGRES
-    # We only save the columns we care about
-    final_cols = ['ticker', 'period_end', 'val', 'fact', 'revenue_yoy_growth']
-    existing_cols = [c for c in final_cols if c in df.columns]
+    # Select only relevant columns to avoid 'extra column' errors
+    cols_to_save = ['ticker', 'period_end', 'val', 'revenue_yoy_growth', 'fact_used']
+    revenue_df[cols_to_save].to_sql("revenue_tracker", engine, if_exists='append', index=False)
     
-    df[existing_cols].to_sql("revenue_tracker", engine, if_exists='append', index=False)
-    print(f"✅ {ticker} synced to database.")
+    print(f"✅ {ticker} synced using tag: {found_tag}")
 
 if __name__ == "__main__":
     watchlist = ["NVDA", "TSLA", "MSFT", "AAPL"]
     
-    # Wipe the table to start fresh so we don't get duplicates during testing
+    # Fresh start: Drop the table if it exists
     with engine.connect() as conn:
         conn.execute(text("DROP TABLE IF EXISTS revenue_tracker;"))
         conn.commit()
+        print("🧹 Database cleaned. Starting fresh...")
 
     for stock in watchlist:
         try:
             sync_revenue(stock)
         except Exception as e:
-            print(f"❌ Error with {stock}: {e}")
+            print(f"❌ Critical Error with {stock}: {e}")
 
-    print("\n--- ALL DONE! ---")
+    print("\n--- SYNC COMPLETE ---")
 
     # PREVIEW
     try:
         with engine.connect() as conn:
-            query = text("SELECT ticker, period_end, val, revenue_yoy_growth FROM revenue_tracker WHERE revenue_yoy_growth IS NOT NULL LIMIT 10")
+            query = text("SELECT ticker, period_end, val, revenue_yoy_growth FROM revenue_tracker WHERE revenue_yoy_growth IS NOT NULL ORDER BY period_end DESC LIMIT 10")
             result = pd.read_sql(query, conn)
-            print("\n--- DATABASE PREVIEW ---")
+            print("\n--- LATEST REVENUE GROWTH DATA ---")
             print(result)
     except Exception as e:
-        print(f"Could not preview data (Table might be empty): {e}")
+        print(f"No data to preview: {e}")
