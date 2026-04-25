@@ -12,7 +12,7 @@ def dispatch_to_subscribers(analyzed_data):
     """
     # 1. Real Subscriber List
     # STARTING TIP: Put your own email here first to test!
-    subscribers = ["343906699@Tdsb.ca", "a27131023905831@gmail.com"] 
+    subscribers = ["youremail@example.com"] 
 
     # 2. Build the HTML body for the email
     email_html = "<h1>📈 Market Intelligence Daily</h1>"
