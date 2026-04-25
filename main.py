@@ -26,10 +26,9 @@ def main():
 
     # PHASE 3: OUTPUT
     print("\n--- PHASE 3: OUTPUT ---")
-    with open("latest_report.md", "w") as f:
+    with open("latest_report.md", "w", encoding="utf-8") as f:
         f.write(report_md)
-    
-    print("✅ Done! Check 'latest_report.md' for results.")
+        print("✅ Done! Check 'latest_report.md' for results.")
 
 if __name__ == "__main__":
     main()
