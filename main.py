@@ -62,7 +62,7 @@ def main():
     try:
         print("🚀 Uploading ONLY the 'dist' folder to Cloudflare Pages...")
         # This only uploads index.html, keeping your .env and scripts private
-        subprocess.run(["wrangler", "pages", "deploy", "dist", "--project-name", "cloudflare name"], check=True)
+        subprocess.run(["wrangler", "pages", "deploy", "dist", "--project-name", "cloudflare name"], check=True, shell=True)
         print("🌐 Live Site Updated!")
     except Exception as e:
         print(f"❌ Deployment failed: {e}")
