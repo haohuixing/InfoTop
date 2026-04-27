@@ -1,23 +1,24 @@
 # email_dispatcher.py
 import os
-import resend
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 from dotenv import load_dotenv
 
 load_dotenv()
-resend.api_key = os.getenv("RESEND_API_KEY")
 
 def dispatch_to_subscribers(analyzed_data):
-    """
-    Sends a styled HTML email to your subscriber list using Resend.
-    """
-    # 1. Real Subscriber List
-    # STARTING TIP: Put your own email here first to test!
-    subscribers = ["youremail@example.com"] 
-
-    # 2. Build the HTML body for the email
-    email_html = "<h1>📈 Market Intelligence Daily</h1>"
-    email_html += "<p>Here is your automated SEC revenue growth report:</p><hr>"
+    # 1. Credentials
+    sender_email = os.getenv("GMAIL_USER")
+    password = os.getenv("GMAIL_APP_PASS")
     
+    # 2. Your Subscriber List (NO LIMITS on who you add here!)
+    subscribers = [
+        "example@example.com"
+    ]
+
+    # 3. Build the HTML content
+    email_html = "<h1>📈 Market Intelligence Daily</h1>"
     for item in analyzed_data:
         color = "#2ecc71" if item['sentiment'] == "Bullish" else "#e74c3c" if item['sentiment'] == "Cautious" else "#f1c40f"
         email_html += f"""
@@ -27,22 +28,31 @@ def dispatch_to_subscribers(analyzed_data):
             <p><em>{item['summary']}</em></p>
         </div>
         """
+
+    # 4. The Sending Loop
+    print(f"📧 Sending via Gmail to {len(subscribers)} subscribers...")
     
-    email_html += "<br><p><small>Sent via your Automated Intelligence Pipeline</small></p>"
-
-    print(f"📧 Attempting to send {len(subscribers)} emails...")
-
-    # 3. Send the emails
     try:
-        params = {
-            "from": "MarketBot <onboarding@resend.dev>", # Resend provides this for testing
-            "to": subscribers,
-            "subject": "🚀 New Market Intelligence Report Available",
-            "html": email_html,
-        }
+        # Connect to Google's Server
+        server = smtplib.SMTP("smtp.gmail.com", 587)
+        server.starttls() # Secure the connection
+        server.login(sender_email, password)
 
-        email = resend.Emails.send(params)
-        print(f"✨ Success! Email ID: {email['id']}")
-        
+        for recipient in subscribers:
+            # Create the email container
+            msg = MIMEMultipart()
+            msg["From"] = f"Market Bot <{sender_email}>"
+            msg["To"] = recipient
+            msg["Subject"] = "🚀 New Market Intelligence Report"
+            
+            msg.attach(MIMEText(email_html, "html"))
+            
+            # Send it!
+            server.sendmail(sender_email, recipient, msg.as_string())
+            print(f"  >> Delivered to: {recipient}")
+
+        server.quit()
+        print("✨ All emails sent successfully!")
+
     except Exception as e:
-        print(f"❌ Failed to send email: {e}")
+        print(f"❌ Gmail Error: {e}")
