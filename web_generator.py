@@ -59,7 +59,7 @@ def create_site_dashboard(analyzed_data):
     </html>
     """
 
-    with open("index.html", "w", encoding="utf-8") as f:
+    with open("dist/index.html", "w", encoding="utf-8") as f:
         f.write(full_html)
     
     print("🌐 Website: 'index.html' generated successfully.")
