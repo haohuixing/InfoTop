@@ -56,7 +56,22 @@ def main():
     except Exception as e:
         print(f"❌ Email Dispatch Error: {e}")
 
-    print("\n✅ MISSION COMPLETE: Data synced, site updated, and emails sent.")
+    # For deploying to cloudflare
+    """
+    # --- PHASE 4: CLOUDFLARE DEPLOY ---
+    print("\n--- PHASE 4: CLOUDFLARE DEPLOY ---")
+    try:
+        print("🚀 Uploading latest dashboard to Cloudflare Pages...")
+        # This runs the wrangler command automatically
+        subprocess.run([
+            "wrangler", "pages", "deploy", ".", 
+            "PROJECT NAME", "PROJECT NAME"
+        ], check=True)
+        print("🌐 Live Site Updated: URL")
+    except Exception as e:
+        print(f"❌ Deployment failed: {e}")
+    """
+    print("\n✅ ALL SYSTEMS GO.")
 
 if __name__ == "__main__":
     main()
