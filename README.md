@@ -12,3 +12,4 @@
 
 - Make website and dashboard so users can select what they want to be notified of in their report
 - Implementation of middle-end AI LLM to process reports better instead of just gathering raw data and then stuffing it into a report
+- Include a readmefile on setting u pdatabase?
