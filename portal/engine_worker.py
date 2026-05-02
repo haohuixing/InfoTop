@@ -1,37 +1,46 @@
-# engine_worker.py
+import os
+import sys
 import time
 from sqlalchemy import create_engine, text
-from analysis import run_gemini_analysis
-from extraction_scripts.extract_revenue import sync_revenue_growth # Your existing script
+from dotenv import load_dotenv
 
+# Allow importing from the root directory
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+from extraction_scripts.extract_revenue import sync_revenue_growth
+
+load_dotenv(dotenv_path="../.env")
 engine = create_engine(os.getenv("DATABASE_URL"))
 
-def process_pending_orders():
+def start_worker():
+    print("🤖 Engine Worker started. Watching for orders...")
     while True:
         with engine.connect() as conn:
-            # Look for an order the website just created
+            # 1. Look for a pending order
             order = conn.execute(text("SELECT * FROM report_orders WHERE status = 'pending' LIMIT 1")).fetchone()
             
             if order:
-                print(f"🛠️ Processing order for {order.ticker}...")
+                print(f"⚙️ Processing {order.ticker}...")
                 
-                # 1. Scrape SEC (Using your existing module)
-                # Modify your sync_revenue_growth to return data instead of just saving
-                raw_data = sync_revenue_growth(order.ticker)
+                # 2. Run Extraction (Your existing script)
+                # Note: You might want to modify sync_revenue_growth to return values
+                sync_revenue_growth(order.ticker)
                 
-                # 2. Analyze with Gemini
-                analysis_result = run_gemini_analysis(
-                    order.ticker, raw_data, order.indicator, order.weight
+                # 3. Placeholder for Analysis (Gemini logic will go here later)
+                mock_analysis = f"Analysis for {order.ticker} based on {order.indicator} (Weight: {order.weight})"
+
+                # 4. Save to Reports table and update status
+                conn.execute(
+                    text("INSERT INTO reports (ticker, analysis_text) VALUES (:t, :a)"),
+                    {"t": order.ticker, "a": mock_analysis}
                 )
-                
-                # 3. Save final report and mark as done
-                conn.execute(text("""
-                    INSERT INTO reports (user_id, ticker, summary) VALUES (1, :t, :s);
-                    UPDATE report_orders SET status = 'completed' WHERE id = :id;
-                """), {"t": order.ticker, "s": analysis_result, "id": order.id})
+                conn.execute(
+                    text("UPDATE report_orders SET status = 'completed' WHERE id = :id"),
+                    {"id": order.id}
+                )
                 conn.commit()
-                
-        time.sleep(10) # Check for new orders every 10 seconds
+                print(f"✅ Finished {order.ticker}")
+
+        time.sleep(10) # Wait 10 seconds before checking again
 
 if __name__ == "__main__":
-    process_pending_orders()
+    start_worker()
