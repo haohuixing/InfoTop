@@ -1,5 +1,9 @@
-edgartools
+fastapi[all]
+uvicorn
+jinja2
+google-generativeai
 pandas
 sqlalchemy
 psycopg2-binary
 python-dotenv
+edgartools
