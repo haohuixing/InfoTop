@@ -1,0 +1,34 @@
+<!-- templates/index.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Market Intelligence</title>
+    <style>
+        body { font-family: sans-serif; background: #0f172a; color: white; padding: 50px; }
+        .form-box { background: #1e293b; padding: 20px; border-radius: 8px; margin-bottom: 30px; }
+        input { padding: 10px; margin-right: 10px; border-radius: 4px; border: none; }
+        button { padding: 10px 20px; background: #38bdf8; border: none; border-radius: 4px; cursor: pointer; }
+        .report-card { border-left: 5px solid #38bdf8; background: #1e293b; padding: 15px; margin: 10px 0; }
+    </style>
+</head>
+<body>
+    <h1>📈 Market Intelligence Hub</h1>
+
+    <div class="form-box">
+        <h3>Order a New Report</h3>
+        <form action="/order-report" method="post">
+            <input type="text" name="ticker" placeholder="Enter Ticker (e.g. NVDA)" required>
+            <input type="email" name="email" placeholder="Your Email" required>
+            <button type="submit">Order Report</button>
+        </form>
+    </div>
+
+    <h2>Latest Reports</h2>
+    {% for report in reports %}
+    <div class="report-card">
+        <strong>{{ report.ticker }}</strong> | Growth: {{ report.growth_pct }}%
+        <p>{{ report.summary }}</p>
+    </div>
+    {% endfor %}
+</body>
+</html>
