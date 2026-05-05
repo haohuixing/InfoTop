@@ -9,6 +9,8 @@
 - **DO NOT** publish your `.env` online, it probably has some sensitive information!
 
 ## Run the database init file  to set up ur database 
+## uvicorn app:app --reload to run the file
+
 
 ## Plan features:
 
