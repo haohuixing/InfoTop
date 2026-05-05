@@ -26,12 +26,20 @@ engine = create_engine(connection_url)
 async def home(request: Request):
     with engine.connect() as conn:
         try:
+            # Fetch reports from the tracker
             reports = pd.read_sql("SELECT * FROM revenue_growth_tracker ORDER BY ticker ASC", conn).to_dict(orient="records")
-        except:
+        except Exception as e:
+            print(f"⚠️ DB Fetch error: {e}")
             reports = []
             
     msg = request.query_params.get("msg")
-    return templates.TemplateResponse("index.html", {"request": request, "reports": reports, "msg": msg})
+    
+    # Use keyword arguments to avoid the 'unhashable type' error
+    return templates.TemplateResponse(
+        request=request, 
+        name="index.html", 
+        context={"reports": reports, "msg": msg}
+    )
 
 @app.post("/order-report", response_model=None)
 async def order_report(ticker: str = Form(...), email: str = Form(...)) -> RedirectResponse:
