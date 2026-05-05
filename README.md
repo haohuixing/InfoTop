@@ -8,6 +8,8 @@
 - Edit all the things in `.env` to whatever you have for yourself
 - **DO NOT** publish your `.env` online, it probably has some sensitive information!
 
+## Run the database init file  to set up ur database 
+
 ## Plan features:
 
 - Make website and dashboard so users can select what they want to be notified of in their report
