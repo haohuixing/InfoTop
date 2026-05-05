@@ -49,7 +49,7 @@ def main():
             # 1. Update the Email Dispatcher to send ONLY to the person who ordered it
             # Note: You will need to tweak email_dispatcher.py to accept a 'recipient' argument
             try:
-                dispatch_to_subscribers(analyzed_list, recipient=user_email)
+                dispatch_to_subscribers(analyzed_list, recipient_email=user_email)
             except Exception as e:
                 print(f"❌ Email Dispatch Error: {e}")
 
