@@ -10,9 +10,11 @@ from web_generator import create_site_dashboard
 from email_dispatcher import dispatch_to_subscribers
 
 def main():
-    # --- PHASE 0: FETCH PENDING ORDERS ---
-    print("--- PHASE 0: CHECKING FOR ORDERS ---")
+    # ADD THIS LINE at the very beginning of main()
+    os.makedirs('dist', exist_ok=True) 
     
+    print("--- PHASE 0: CHECKING FOR ORDERS ---")
+
     # 1. Look for users who clicked 'Order' on your (future) website
     query = text("SELECT * FROM report_requests WHERE status = 'pending'")
     with engine.connect() as conn:
