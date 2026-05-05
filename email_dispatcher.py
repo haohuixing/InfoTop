@@ -18,11 +18,8 @@ def dispatch_to_subscribers(analyzed_data, recipient_email=None):
     if recipient_email:
         subscribers = [recipient_email]
     else:
-        subscribers = [
-            "haohuixing.hhx@gmail.com", 
-            "tonyhlxing@gmail.com",
-            "343906699@Tdsb.ca"
-        ]
+        subscribers = [] # Test list of whatever emails you want
+        
 
     # --- UPDATED STEP 3: Build the HTML content ---
     # We change the title and add a "Thank you" note
