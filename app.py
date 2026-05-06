@@ -1,61 +1,54 @@
-<!-- templates/index.html -->
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Market Intelligence</title>
-    <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #0f172a; color: #f8fafc; padding: 50px; line-height: 1.6; }
-        .container { max-width: 800px; margin: auto; }
-        h1 { border-bottom: 2px solid #1e293b; padding-bottom: 10px; color: #38bdf8; }
-        
-        /* Message Box for Success */
-        .msg-box { background: #064e3b; color: #34d399; padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #059669; }
-        
-        .form-box { background: #1e293b; padding: 25px; border-radius: 12px; margin-bottom: 40px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
-        h3 { margin-top: 0; color: #94a3b8; }
-        
-        input { padding: 12px; margin-bottom: 10px; border-radius: 6px; border: 1px solid #334155; background: #0f172a; color: white; width: calc(50% - 22px); }
-        button { padding: 12px 24px; background: #38bdf8; color: #0f172a; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; transition: background 0.3s; }
-        button:hover { background: #7dd3fc; }
-        
-        .report-card { border-left: 5px solid #38bdf8; background: #1e293b; padding: 20px; margin: 15px 0; border-radius: 0 8px 8px 0; }
-        .ticker-head { font-size: 1.2rem; font-weight: bold; color: #38bdf8; }
-        .growth-tag { color: #94a3b8; font-size: 0.9rem; }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>📈 Market Intelligence Hub</h1>
+import os
+from fastapi import FastAPI, Request, Form
+from fastapi.templating import Jinja2Templates
+from fastapi.responses import RedirectResponse
+import pandas as pd
+from sqlalchemy import create_engine, text
+from sqlalchemy.engine import URL
+from dotenv import load_dotenv
 
-        <!-- 1. Display the success message if it exists in the URL -->
-        {% if msg %}
-        <div class="msg-box">
-            ✅ {{ msg }}
-        </div>
-        {% endif %}
+load_dotenv()
+app = FastAPI()
+templates = Jinja2Templates(directory="templates")
 
-        <div class="form-box">
-            <h3>Order a New Report</h3>
-            <!-- 2. CHANGE THIS ACTION TO YOUR RENDER URL -->
-            <form action="https://YOUR-RENDER-APP-NAME.onrender.com/order-report" method="post">
-                <input type="text" name="ticker" placeholder="Ticker (e.g. NVDA)" required>
-                <input type="email" name="email" placeholder="Your Email" required>
-                <br>
-                <button type="submit">Generate Financial Report</button>
-            </form>
-        </div>
+# --- DATABASE SETUP ---
+connection_url = URL.create(
+    drivername="postgresql",
+    username=os.getenv("DB_USER"),
+    password=os.getenv("DB_PASS"),
+    host=os.getenv("DB_HOST"),
+    port=int(os.getenv("DB_PORT") or 5432),
+    database=os.getenv("DB_NAME")
+)
+engine = create_engine(connection_url)
 
-        <h2>Latest Market Insights</h2>
-        {% if reports %}
-            {% for report in reports %}
-            <div class="report-card">
-                <div class="ticker-head">{{ report.ticker }} <span class="growth-tag">| Growth: {{ report.growth_pct }}%</span></div>
-                <p>{{ report.summary }}</p>
-            </div>
-            {% endfor %}
-        {% else %}
-            <p style="color: #64748b;">No reports generated yet. Place an order above!</p>
-        {% endif %}
-    </div>
-</body>
-</html>
+@app.get("/")
+async def home(request: Request):
+    with engine.connect() as conn:
+        try:
+            # Fetch reports from the tracker
+            reports = pd.read_sql("SELECT * FROM revenue_growth_tracker ORDER BY ticker ASC", conn).to_dict(orient="records")
+        except Exception as e:
+            print(f"⚠️ DB Fetch error: {e}")
+            reports = []
+            
+    msg = request.query_params.get("msg")
+    
+    # Use keyword arguments to avoid the 'unhashable type' error
+    return templates.TemplateResponse(
+        request=request, 
+        name="index.html", 
+        context={"reports": reports, "msg": msg}
+    )
+
+@app.post("/order-report", response_model=None)
+async def order_report(ticker: str = Form(...), email: str = Form(...)) -> RedirectResponse:
+    with engine.connect() as conn:
+        conn.execute(
+            text("INSERT INTO report_requests (ticker, user_email, status) VALUES (:t, :e, 'pending')"),
+            {"t": ticker.upper().strip(), "e": email.strip()}
+        )
+        conn.commit()
+    
+    print(f"📥 New Order Received: {ticker} for {email}")
+    return RedirectResponse(url="/?msg=Success!+Your+report+is+being+processed.", status_code=303)
