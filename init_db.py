@@ -6,7 +6,6 @@ from sqlalchemy.engine import URL
 
 load_dotenv()
 
-
 # 1. Setup connection (using your existing logic)
 connection_url = URL.create(
     drivername="postgresql",
