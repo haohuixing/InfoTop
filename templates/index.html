@@ -1,34 +1,61 @@
 <!-- templates/index.html -->
 <!DOCTYPE html>
-<html> 
-<head> 
+<html>
+<head>
     <title>Market Intelligence</title>
     <style>
-        body { font-family: sans-serif; background: #0f172a; color: white; padding: 50px; }
-        .form-box { background: #1e293b; padding: 20px; border-radius: 8px; margin-bottom: 30px; }
-        input { padding: 10px; margin-right: 10px; border-radius: 4px; border: none; }
-        button { padding: 10px 20px; background: #38bdf8; border: none; border-radius: 4px; cursor: pointer; }
-        .report-card { border-left: 5px solid #38bdf8; background: #1e293b; padding: 15px; margin: 10px 0; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #0f172a; color: #f8fafc; padding: 50px; line-height: 1.6; }
+        .container { max-width: 800px; margin: auto; }
+        h1 { border-bottom: 2px solid #1e293b; padding-bottom: 10px; color: #38bdf8; }
+        
+        /* Message Box for Success */
+        .msg-box { background: #064e3b; color: #34d399; padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #059669; }
+        
+        .form-box { background: #1e293b; padding: 25px; border-radius: 12px; margin-bottom: 40px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
+        h3 { margin-top: 0; color: #94a3b8; }
+        
+        input { padding: 12px; margin-bottom: 10px; border-radius: 6px; border: 1px solid #334155; background: #0f172a; color: white; width: calc(50% - 22px); }
+        button { padding: 12px 24px; background: #38bdf8; color: #0f172a; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; transition: background 0.3s; }
+        button:hover { background: #7dd3fc; }
+        
+        .report-card { border-left: 5px solid #38bdf8; background: #1e293b; padding: 20px; margin: 15px 0; border-radius: 0 8px 8px 0; }
+        .ticker-head { font-size: 1.2rem; font-weight: bold; color: #38bdf8; }
+        .growth-tag { color: #94a3b8; font-size: 0.9rem; }
     </style>
 </head>
 <body>
-    <h1>📈 Market Intelligence Hub</h1>
+    <div class="container">
+        <h1>📈 Market Intelligence Hub</h1>
 
-    <div class="form-box">
-        <h3>Order a New Report</h3>
-        <form action="/order-report" method="post">
-            <input type="text" name="ticker" placeholder="Enter Ticker (e.g. NVDA)" required>
-            <input type="email" name="email" placeholder="Your Email" required>
-            <button type="submit">Order Report</button>
-        </form>
-    </div>
+        <!-- 1. Display the success message if it exists in the URL -->
+        {% if msg %}
+        <div class="msg-box">
+            ✅ {{ msg }}
+        </div>
+        {% endif %}
 
-    <h2>Latest Reports</h2>
-    {% for report in reports %}
-    <div class="report-card">
-        <strong>{{ report.ticker }}</strong> | Growth: {{ report.growth_pct }}%
-        <p>{{ report.summary }}</p>
+        <div class="form-box">
+            <h3>Order a New Report</h3>
+            <!-- 2. CHANGE THIS ACTION TO YOUR RENDER URL -->
+            <form action="https://YOUR-RENDER-APP-NAME.onrender.com/order-report" method="post">
+                <input type="text" name="ticker" placeholder="Ticker (e.g. NVDA)" required>
+                <input type="email" name="email" placeholder="Your Email" required>
+                <br>
+                <button type="submit">Generate Financial Report</button>
+            </form>
+        </div>
+
+        <h2>Latest Market Insights</h2>
+        {% if reports %}
+            {% for report in reports %}
+            <div class="report-card">
+                <div class="ticker-head">{{ report.ticker }} <span class="growth-tag">| Growth: {{ report.growth_pct }}%</span></div>
+                <p>{{ report.summary }}</p>
+            </div>
+            {% endfor %}
+        {% else %}
+            <p style="color: #64748b;">No reports generated yet. Place an order above!</p>
+        {% endif %}
     </div>
-    {% endfor %}
 </body>
 </html>
