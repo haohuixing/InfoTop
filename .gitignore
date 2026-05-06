@@ -1,1 +1,5 @@
 .env
+__pycache__/
+dist/
+latest_report.md
+*.exe
