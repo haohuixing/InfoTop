@@ -1,16 +1,16 @@
-### Template readme file for now....
+# Template readme file for now....
 
 ## General tips:
 
-# Edit .env.example:
+### Edit .env.example:
 
 - Rename `.env.example` to `.env`
 - Edit all the things in `.env` to whatever you have for yourself
 - **DO NOT** publish your `.env` online, it probably has some sensitive information!
 
-## Run the database init file  to set up ur database 
-## uvicorn app:app --reload to run the file
-## Or just host this on render
+### Run the database init file  to set up ur database 
+### uvicorn app:app --reload to run the file
+### Or just host this on render
 
 ## Plan features:
 
