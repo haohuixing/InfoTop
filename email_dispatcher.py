@@ -18,7 +18,7 @@ def dispatch_to_subscribers(analyzed_data, recipient_email=None):
     if recipient_email:
         subscribers = [recipient_email]
     else:
-        subscribers = [] # Test list for if there is no data in the database. Probably won't be needed?
+        subscribers = [] # Test list for if there is are no recorded orders in the database. Probably won't be needed?
         
 
     # --- UPDATED STEP 3: Build the HTML content ---
