@@ -10,7 +10,7 @@
 
 ### Run the database init file  to set up ur database 
 ### Run this in cmd prompt after cd "uvicorn app:app --reload to run the file"
-### Or just host this on render
+### Make sure to host on render
 
 ## Plan features:
 
