@@ -10,7 +10,7 @@
 
 ## Run the database init file  to set up ur database 
 ## uvicorn app:app --reload to run the file
-
+## Or just host this on render
 
 ## Plan features:
 
