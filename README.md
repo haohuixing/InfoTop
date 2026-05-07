@@ -9,7 +9,7 @@
 - **DO NOT** publish your `.env` online, it probably has some sensitive information!
 
 ### Run the database init file  to set up ur database 
-### uvicorn app:app --reload to run the file
+### Run this in cmd prompt after cd "uvicorn app:app --reload to run the file"
 ### Or just host this on render
 
 ## Plan features:
