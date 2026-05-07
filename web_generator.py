@@ -1,4 +1,5 @@
 # web_generator.py
+# Useless to be removed?
 
 def create_site_dashboard(analyzed_data):
     """
