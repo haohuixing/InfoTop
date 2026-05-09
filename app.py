@@ -2,6 +2,7 @@ import os
 from fastapi import FastAPI, Request, Form
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import RedirectResponse
+from fastapi.staticfiles import StaticFiles  # Added for Logo support
 from sqlalchemy import create_engine, text
 from sqlalchemy.engine import URL
 from dotenv import load_dotenv
@@ -10,6 +11,13 @@ load_dotenv()
 app = FastAPI()
 templates = Jinja2Templates(directory="templates")
 
+# --- STATIC FILES SETUP ---
+# This tells FastAPI to serve the 'images' folder at the '/images' URL
+if not os.path.exists("images"):
+    os.makedirs("images")
+app.mount("/images", StaticFiles(directory="images"), name="images")
+
+# Master URL from .env
 BASE_URL = os.getenv("BASE_URL", "http://localhost:8000")
 
 connection_url = URL.create(
@@ -24,7 +32,6 @@ engine = create_engine(connection_url)
 
 @app.get("/")
 async def home(request: Request, msg: str = None):
-    # Pull the 6 latest reports for the Archive grid
     query = text("""
         SELECT ticker, growth_pct, summary, sentiment 
         FROM revenue_growth_tracker 
@@ -57,3 +64,7 @@ async def order_report(ticker: str = Form(...), email: str = Form(...)):
         return RedirectResponse(url="/?msg=Database+Error.", status_code=303)
 
     return RedirectResponse(url="/?msg=Intelligence+Request+Received.+Check+Email+Shortly.", status_code=303)
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000)
