@@ -24,13 +24,19 @@ engine = create_engine(connection_url)
 
 @app.get("/")
 async def home(request: Request, msg: str = None):
-    # Fetch recent reports for the "Intelligence Feed" module
-    query = text("SELECT ticker, growth_pct, summary, sentiment FROM revenue_growth_tracker ORDER BY created_at DESC LIMIT 6")
+    # Pull the 6 latest reports for the Archive grid
+    query = text("""
+        SELECT ticker, growth_pct, summary, sentiment 
+        FROM revenue_growth_tracker 
+        ORDER BY created_at DESC 
+        LIMIT 6
+    """)
     try:
         with engine.connect() as conn:
             result = conn.execute(query)
             reports = [dict(row) for row in result.mappings()]
-    except:
+    except Exception as e:
+        print(f"❌ DB Error: {e}")
         reports = []
 
     return templates.TemplateResponse(
@@ -42,7 +48,12 @@ async def home(request: Request, msg: str = None):
 @app.post("/order-report")
 async def order_report(ticker: str = Form(...), email: str = Form(...)):
     query = text("INSERT INTO report_requests (ticker, user_email, status) VALUES (:t, :e, 'pending')")
-    with engine.connect() as conn:
-        conn.execute(query, {"t": ticker.upper().strip(), "e": email.lower().strip()})
-        conn.commit()
+    try:
+        with engine.connect() as conn:
+            conn.execute(query, {"t": ticker.upper().strip(), "e": email.lower().strip()})
+            conn.commit()
+    except Exception as e:
+        print(f"❌ Order Error: {e}")
+        return RedirectResponse(url="/?msg=Database+Error.", status_code=303)
+
     return RedirectResponse(url="/?msg=Intelligence+Request+Received.+Check+Email+Shortly.", status_code=303)
