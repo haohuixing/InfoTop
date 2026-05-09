@@ -67,21 +67,26 @@
         .nav-links a:hover { color: var(--gold); }
 
         /* Hero Section */
-        header { padding: 100px 50px; text-align: center; background: white; }
+        header { padding: 80px 50px 120px; text-align: center; background: white; }
         
-        /* 1. LARGE HERO LOGO STYLE */
+        /* UPDATED: SUBSTANTIALLY BIGGER HERO LOGO */
         .hero-logo {
-            width: 140px; /* Big center logo */
+            width: 240px; /* Increased from 140px */
             height: auto;
-            margin-bottom: 30px;
-            opacity: 0.9;
+            margin-bottom: 40px;
+            filter: drop-shadow(0px 10px 15px rgba(0,0,0,0.05)); /* Subtle depth */
+            transition: transform 0.4s ease;
+        }
+        
+        .hero-logo:hover {
+            transform: scale(1.02); /* Very subtle interaction */
         }
 
-        header p.pre-title { font-size: 0.8rem; color: var(--gold); text-transform: uppercase; letter-spacing: 4px; font-weight: 700; margin-bottom: 20px; }
-        header h1 { font-family: 'Playfair Display', serif; font-size: 4rem; margin: 0 auto 20px; max-width: 950px; line-height: 1.1; }
-        header p.description { font-size: 1.2rem; color: var(--muted); max-width: 600px; margin: 0 auto 40px; font-weight: 300; }
+        header p.pre-title { font-size: 0.8rem; color: var(--gold); text-transform: uppercase; letter-spacing: 5px; font-weight: 700; margin-bottom: 25px; }
+        header h1 { font-family: 'Playfair Display', serif; font-size: 4.2rem; margin: 0 auto 25px; max-width: 1000px; line-height: 1.1; }
+        header p.description { font-size: 1.25rem; color: var(--muted); max-width: 650px; margin: 0 auto 50px; font-weight: 300; }
 
-        .cta-button { background: var(--charcoal); color: white; padding: 18px 45px; text-decoration: none; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; font-size: 0.8rem; transition: 0.3s; }
+        .cta-button { background: var(--charcoal); color: white; padding: 20px 50px; text-decoration: none; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; font-size: 0.85rem; transition: 0.3s; }
         .cta-button:hover { background: var(--gold); }
 
         /* Financial Tool Module */
@@ -112,6 +117,7 @@
         @media (max-width: 900px) {
             .module-container, .grid { grid-template-columns: 1fr; }
             header h1 { font-size: 2.5rem; }
+            .hero-logo { width: 160px; }
             nav { padding: 20px; }
             .nav-links { display: none; }
         }
@@ -130,7 +136,6 @@
         </a>
         <div class="nav-links">
             <a href="#tool">Analysis</a>
-            <!-- 2. ADDED 3 NEW MENU ITEMS -->
             <a href="#">Capital</a>
             <a href="#">Strategy</a>
             <a href="#">Archive</a>
@@ -140,8 +145,8 @@
     </nav>
 
     <header>
-        <!-- 3. ADDED BIG LOGO TO HERO -->
-        <img src="/images/logo.png" alt="InfoTop Large Logo" class="hero-logo">
+        <!-- LARGE CENTER LOGO -->
+        <img src="/images/logo.png" alt="InfoTop Primary Seal" class="hero-logo">
         
         <p class="pre-title">Strategic Domain for Global Investors</p>
         <h1>Automated Intelligence for the Modern Capitalist.</h1>
