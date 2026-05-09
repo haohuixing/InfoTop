@@ -4,8 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- 1. TAB NAME & TAB ICON -->
-    <title>InfoTop</title>
+    <title>InfoTop | Capital Intelligence</title>
     <link rel="icon" type="image/png" href="/images/logo.png">
 
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
@@ -23,7 +22,7 @@
         
         .msg-box { background: var(--gold); color: white; padding: 15px; text-align: center; font-weight: 600; position: relative; z-index: 101; }
 
-        /* 2. LOGO & TEXT ALIGNMENT */
+        /* Navbar */
         nav { 
             display: flex; 
             justify-content: space-between; 
@@ -39,35 +38,47 @@
         .logo { 
             display: flex;
             align-items: center;
-            gap: 15px; /* Space between logo and text */
+            gap: 12px;
             text-decoration: none;
             color: var(--charcoal);
             font-family: 'Playfair Display', serif;
             font-weight: 700;
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             letter-spacing: -1px;
         }
 
         .logo-img {
-            height: 40px; /* Slightly smaller to match text height */
+            height: 35px;
             width: auto;
             display: block;
         }
 
         .nav-links a { 
-            margin-left: 30px; 
+            margin-left: 25px; 
             text-decoration: none; 
             color: var(--charcoal); 
-            font-size: 0.85rem; 
+            font-size: 0.75rem; 
             font-weight: 600; 
             text-transform: uppercase; 
-            letter-spacing: 1px; 
+            letter-spacing: 1.5px; 
+            transition: 0.2s;
         }
 
+        .nav-links a:hover { color: var(--gold); }
+
         /* Hero Section */
-        header { padding: 120px 50px; text-align: center; background: white; }
-        header p.pre-title { font-size: 0.8rem; color: var(--gold); text-transform: uppercase; letter-spacing: 3px; font-weight: 700; margin-bottom: 20px; }
-        header h1 { font-family: 'Playfair Display', serif; font-size: 4rem; margin: 0 auto 20px; max-width: 900px; line-height: 1.1; }
+        header { padding: 100px 50px; text-align: center; background: white; }
+        
+        /* 1. LARGE HERO LOGO STYLE */
+        .hero-logo {
+            width: 140px; /* Big center logo */
+            height: auto;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        header p.pre-title { font-size: 0.8rem; color: var(--gold); text-transform: uppercase; letter-spacing: 4px; font-weight: 700; margin-bottom: 20px; }
+        header h1 { font-family: 'Playfair Display', serif; font-size: 4rem; margin: 0 auto 20px; max-width: 950px; line-height: 1.1; }
         header p.description { font-size: 1.2rem; color: var(--muted); max-width: 600px; margin: 0 auto 40px; font-weight: 300; }
 
         .cta-button { background: var(--charcoal); color: white; padding: 18px 45px; text-decoration: none; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; font-size: 0.8rem; transition: 0.3s; }
@@ -114,24 +125,30 @@
 
     <nav>
         <a href="/" class="logo">
-            <img src="/images/logo.png" alt="Logo" class="logo-img">
+            <img src="/images/logo.png" alt="InfoTop Logo" class="logo-img">
             <span>InfoTop</span>
         </a>
         <div class="nav-links">
             <a href="#tool">Analysis</a>
+            <!-- 2. ADDED 3 NEW MENU ITEMS -->
+            <a href="#">Capital</a>
+            <a href="#">Strategy</a>
+            <a href="#">Archive</a>
             <a href="#">Sovereignty</a>
             <a href="#">About</a>
         </div>
     </nav>
 
     <header>
+        <!-- 3. ADDED BIG LOGO TO HERO -->
+        <img src="/images/logo.png" alt="InfoTop Large Logo" class="hero-logo">
+        
         <p class="pre-title">Strategic Domain for Global Investors</p>
         <h1>Automated Intelligence for the Modern Capitalist.</h1>
         <p class="description">Leveraging direct SEC Edgar data and algorithmic analysis to provide financial clarity in a volatile global market.</p>
         <a href="#tool" class="cta-button">Execute Analysis</a>
     </header>
 
-    <!-- ... rest of the section code remains same as before ... -->
     <section class="tool-section" id="tool">
         <div class="module-container">
             <div class="tool-info">
