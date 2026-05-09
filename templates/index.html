@@ -21,14 +21,18 @@
     <div class="container">
         <h1>📈 Market Intelligence Hub</h1>
 
+        <!-- 1. Success Message Display -->
         {% if msg %}
         <div class="msg-box">✅ {{ msg }}</div>
         {% endif %}
 
         <div class="form-box">
             <h3>Order a New Report</h3>
-            <!-- Using the BASE_URL variable from .env -->
-            <form action="{{ base_url }}/order-report" method="post">
+            <!-- 
+               Best Practice: Use a relative path /order-report. 
+               This ensures it works locally and on Render without needing the variable.
+            -->
+            <form action="/order-report" method="post">
                 <input type="text" name="ticker" placeholder="Ticker (e.g. NVDA)" required>
                 <input type="email" name="email" placeholder="Your Email" required>
                 <br>
