@@ -30,13 +30,16 @@ async def home(request: Request, msg: str = None):
         result = conn.execute(query)
         reports = [dict(row) for row in result.mappings()]
 
-    return templates.TemplateResponse("index.html", {
-        "request": request, 
-        "reports": reports, 
-        "msg": msg,
-        "base_url": BASE_URL
-    })
-
+    # UPDATE THIS PART BELOW:
+    return templates.TemplateResponse(
+        request=request,              # First argument must be request
+        name="index.html",            # Second is the template name
+        context={                     # Third is the data dictionary
+            "reports": reports, 
+            "msg": msg, 
+            "base_url": BASE_URL
+        }
+    )
 @app.post("/order-report")
 async def order_report(ticker: str = Form(...), email: str = Form(...)):
     with engine.connect() as conn:
