@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Capital Intelligence | Strategic Market Analysis</title>
-    <!-- Import Premium Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     
     <style>
@@ -16,46 +15,35 @@
             --border: #e8e8e3;
         }
 
-        body { 
-            font-family: 'Inter', sans-serif; 
-            background: var(--bg); 
-            color: var(--charcoal); 
-            margin: 0; 
-            padding: 0;
-            line-height: 1.6; 
-        }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--charcoal); margin: 0; padding: 0; line-height: 1.6; }
         
         /* Message Box */
-        .msg-box { 
-            background: var(--gold); 
-            color: white; 
-            padding: 15px; 
-            text-align: center; 
-            font-weight: 600;
-            position: relative;
-            z-index: 101;
-        }
+        .msg-box { background: var(--gold); color: white; padding: 15px; text-align: center; font-weight: 600; position: relative; z-index: 101; }
 
         /* Navbar */
         nav { 
             display: flex; 
             justify-content: space-between; 
             align-items: center; 
-            padding: 25px 50px; 
+            padding: 15px 50px; /* Reduced padding slightly for logo */
             border-bottom: 1px solid var(--border); 
             background: white; 
-            position: sticky; /* Fixed CSS bug */
+            position: sticky; 
             top: 0; 
             z-index: 100; 
         }
 
         .logo { 
-            font-family: 'Playfair Display', serif; 
-            font-weight: 700; 
-            font-size: 1.5rem; 
-            letter-spacing: -1px; 
+            display: flex;
+            align-items: center;
             text-decoration: none;
-            color: var(--charcoal);
+        }
+
+        /* Logo image sizing */
+        .logo-img {
+            height: 45px; /* Adjust this to make your logo look right */
+            width: auto;
+            display: block;
         }
 
         .nav-links a { 
@@ -69,196 +57,38 @@
         }
 
         /* Hero Section */
-        header { 
-            padding: 120px 50px; 
-            text-align: center; 
-            background: white; 
-        }
+        header { padding: 120px 50px; text-align: center; background: white; }
+        header p.pre-title { font-size: 0.8rem; color: var(--gold); text-transform: uppercase; letter-spacing: 3px; font-weight: 700; margin-bottom: 20px; }
+        header h1 { font-family: 'Playfair Display', serif; font-size: 4rem; margin: 0 auto 20px; max-width: 900px; line-height: 1.1; }
+        header p.description { font-size: 1.2rem; color: var(--muted); max-width: 600px; margin: 0 auto 40px; font-weight: 300; }
 
-        header p.pre-title { 
-            font-size: 0.8rem;
-            color: var(--gold);
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            font-weight: 700;
-            margin-bottom: 20px;
-        }
-
-        header h1 { 
-            font-family: 'Playfair Display', serif; 
-            font-size: 4rem; 
-            margin: 0 auto 20px; 
-            max-width: 900px; 
-            line-height: 1.1; 
-        }
-
-        header p.description { 
-            font-size: 1.2rem; 
-            color: var(--muted); 
-            max-width: 600px; 
-            margin: 0 auto 40px; 
-            font-weight: 300; 
-        }
-
-        .cta-button { 
-            background: var(--charcoal); 
-            color: white; 
-            padding: 18px 45px; 
-            text-decoration: none; 
-            font-weight: 600; 
-            text-transform: uppercase; 
-            letter-spacing: 2px; 
-            font-size: 0.8rem; 
-            transition: 0.3s; 
-        }
-
-        .cta-button:hover { 
-            background: var(--gold); 
-        }
+        .cta-button { background: var(--charcoal); color: white; padding: 18px 45px; text-decoration: none; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; font-size: 0.8rem; transition: 0.3s; }
+        .cta-button:hover { background: var(--gold); }
 
         /* Financial Tool Module */
-        .tool-section { 
-            background: white; 
-            padding: 100px 50px; 
-            border-top: 1px solid var(--border); 
-        }
+        .tool-section { background: white; padding: 100px 50px; border-top: 1px solid var(--border); }
+        .module-container { max-width: 1100px; margin: auto; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+        .tool-info h2 { font-family: 'Playfair Display', serif; font-size: 2.5rem; margin-top: 0; }
+        .tool-info p { color: var(--muted); font-size: 1.1rem; margin-bottom: 30px; }
 
-        .module-container { 
-            max-width: 1100px; 
-            margin: auto; 
-            display: grid; 
-            grid-template-columns: 1fr 1fr; 
-            gap: 80px; 
-            align-items: center;
-        }
-        
-        .tool-info h2 { 
-            font-family: 'Playfair Display', serif; 
-            font-size: 2.5rem; 
-            margin-top: 0; 
-        }
-
-        .tool-info p { 
-            color: var(--muted); 
-            font-size: 1.1rem; 
-            margin-bottom: 30px; 
-        }
-
-        .order-card { 
-            background: var(--bg); 
-            padding: 40px; 
-            border: 1px solid var(--border); 
-            box-shadow: 20px 20px 0px rgba(197, 160, 89, 0.1); 
-        }
-
-        .order-card label {
-            font-size: 0.7rem; 
-            font-weight: 700; 
-            margin-bottom: 8px; 
-            display: block;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .order-card input { 
-            display: block; 
-            width: 100%; 
-            padding: 15px; 
-            margin-bottom: 20px; 
-            border: 1px solid var(--border); 
-            box-sizing: border-box; 
-            font-size: 1rem; 
-            background: white;
-        }
-
-        .order-card button { 
-            width: 100%; 
-            padding: 20px; 
-            background: var(--charcoal); 
-            color: white; 
-            border: none; 
-            font-weight: 700; 
-            text-transform: uppercase; 
-            letter-spacing: 2px;
-            cursor: pointer; 
-            transition: 0.3s; 
-        }
-
-        .order-card button:hover { 
-            background: var(--gold); 
-        }
+        .order-card { background: var(--bg); padding: 40px; border: 1px solid var(--border); box-shadow: 20px 20px 0px rgba(197, 160, 89, 0.1); }
+        .order-card label { font-size: 0.7rem; font-weight: 700; margin-bottom: 8px; display: block; text-transform: uppercase; letter-spacing: 1px; }
+        .order-card input { display: block; width: 100%; padding: 15px; margin-bottom: 20px; border: 1px solid var(--border); box-sizing: border-box; font-size: 1rem; background: white; }
+        .order-card button { width: 100%; padding: 20px; background: var(--charcoal); color: white; border: none; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; cursor: pointer; transition: 0.3s; }
+        .order-card button:hover { background: var(--gold); }
 
         /* Intelligence Feed */
-        .feed-section { 
-            padding: 100px 50px; 
-            background: var(--bg); 
-        }
-
-        .feed-header { 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: flex-end; 
-            max-width: 1100px; 
-            margin: 0 auto 50px; 
-            border-bottom: 2px solid var(--charcoal); 
-            padding-bottom: 20px; 
-        }
-
-        .feed-header h2 { 
-            font-family: 'Playfair Display', serif; 
-            font-size: 2.2rem; 
-            margin: 0; 
-        }
+        .feed-section { padding: 100px 50px; background: var(--bg); }
+        .feed-header { display: flex; justify-content: space-between; align-items: flex-end; max-width: 1100px; margin: 0 auto 50px; border-bottom: 2px solid var(--charcoal); padding-bottom: 20px; }
+        .feed-header h2 { font-family: 'Playfair Display', serif; font-size: 2.2rem; margin: 0; }
         
-        .grid { 
-            display: grid; 
-            grid-template-columns: repeat(3, 1fr); 
-            gap: 50px; 
-            max-width: 1100px; 
-            margin: auto; 
-        }
+        .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 50px; max-width: 1100px; margin: auto; }
+        .report-item { border-bottom: 1px solid var(--border); padding-bottom: 30px; }
+        .ticker-label { color: var(--gold); font-weight: 700; font-size: 0.8rem; letter-spacing: 1px; text-transform: uppercase; }
+        .report-title { font-family: 'Playfair Display', serif; font-size: 1.5rem; margin: 10px 0; font-weight: 700; }
+        .report-summary { font-size: 0.95rem; color: var(--muted); display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.7; }
 
-        .report-item { 
-            border-bottom: 1px solid var(--border); 
-            padding-bottom: 30px; 
-            transition: 0.3s;
-        }
-
-        .ticker-label { 
-            color: var(--gold); 
-            font-weight: 700; 
-            font-size: 0.8rem; 
-            letter-spacing: 1px; 
-            text-transform: uppercase;
-        }
-
-        .report-title { 
-            font-family: 'Playfair Display', serif; 
-            font-size: 1.5rem; 
-            margin: 10px 0; 
-            font-weight: 700;
-        }
-
-        .report-summary { 
-            font-size: 0.95rem; 
-            color: var(--muted); 
-            display: -webkit-box; 
-            -webkit-line-clamp: 3; 
-            -webkit-box-orient: vertical; 
-            overflow: hidden; 
-            line-height: 1.7;
-        }
-
-        footer { 
-            text-align: center; 
-            padding: 80px; 
-            border-top: 1px solid var(--border); 
-            font-size: 0.75rem; 
-            color: var(--muted); 
-            text-transform: uppercase; 
-            letter-spacing: 2px; 
-            background: white;
-        }
+        footer { text-align: center; padding: 80px; border-top: 1px solid var(--border); font-size: 0.75rem; color: var(--muted); text-transform: uppercase; letter-spacing: 2px; background: white; }
 
         @media (max-width: 900px) {
             .module-container, .grid { grid-template-columns: 1fr; }
@@ -275,7 +105,9 @@
     {% endif %}
 
     <nav>
-        <a href="/" class="logo">CAPITAL INTELLIGENCE</a>
+        <a href="/" class="logo">
+            <img src="/images/logo.png" alt="Capital Intelligence" class="logo-img">
+        </a>
         <div class="nav-links">
             <a href="#tool">Analysis</a>
             <a href="#">Sovereignty</a>
