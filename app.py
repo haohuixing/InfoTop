@@ -2,7 +2,7 @@ import os
 from fastapi import FastAPI, Request, Form
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import RedirectResponse
-from fastapi.staticfiles import StaticFiles  # Added for Logo support
+from fastapi.staticfiles import StaticFiles
 from sqlalchemy import create_engine, text
 from sqlalchemy.engine import URL
 from dotenv import load_dotenv
@@ -11,13 +11,11 @@ load_dotenv()
 app = FastAPI()
 templates = Jinja2Templates(directory="templates")
 
-# --- STATIC FILES SETUP ---
-# This tells FastAPI to serve the 'images' folder at the '/images' URL
+# Mount images folder (Ensures your logo shows in navbar AND browser tab)
 if not os.path.exists("images"):
     os.makedirs("images")
 app.mount("/images", StaticFiles(directory="images"), name="images")
 
-# Master URL from .env
 BASE_URL = os.getenv("BASE_URL", "http://localhost:8000")
 
 connection_url = URL.create(
@@ -32,12 +30,7 @@ engine = create_engine(connection_url)
 
 @app.get("/")
 async def home(request: Request, msg: str = None):
-    query = text("""
-        SELECT ticker, growth_pct, summary, sentiment 
-        FROM revenue_growth_tracker 
-        ORDER BY created_at DESC 
-        LIMIT 6
-    """)
+    query = text("SELECT ticker, growth_pct, summary, sentiment FROM revenue_growth_tracker ORDER BY created_at DESC LIMIT 6")
     try:
         with engine.connect() as conn:
             result = conn.execute(query)
