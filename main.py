@@ -62,23 +62,6 @@ def main():
         except Exception as e:
             print(f"❌ Error processing {ticker}: {e}")
 
-    # --- PHASE 4: UPDATE DASHBOARD & DEPLOY ---
-    print("\n--- PHASE 4: UPDATING GLOBAL DASHBOARD ---")
-    
-    # We fetch ALL completed data to show on the public website
-    all_data_df = pd.read_sql("SELECT * FROM revenue_growth_tracker", engine)
-    full_analyzed_list = run_analysis(all_data_df)
-    
-    try:
-        # Update the index.html with everyone's reports
-        create_site_dashboard(full_analyzed_list)
-        
-        # Deploy updated site to Cloudflare
-        print("🚀 Syncing updated dashboard to Cloudflare...")
-        subprocess.run(["wrangler", "pages", "deploy", "dist", "--project-name", "market-intelligence"], check=True, shell=True)
-        print("🌐 Live Site Updated!")
-    except Exception as e:
-        print(f"❌ Deployment failed: {e}")
 
     print("\n✅ WORKER CYCLE COMPLETE.")
 
