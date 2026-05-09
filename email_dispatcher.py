@@ -18,8 +18,7 @@ def dispatch_to_subscribers(analyzed_data, recipient_email=None):
     if recipient_email:
         subscribers = [recipient_email]
     else:
-        subscribers = [] # Test list for if there is are no recorded orders in the database. Probably won't be needed?
-        
+        subscribers = []
 
     # --- UPDATED STEP 3: Build the HTML content ---
     # We change the title and add a "Thank you" note
@@ -48,7 +47,7 @@ def dispatch_to_subscribers(analyzed_data, recipient_email=None):
         <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;">
         <p style="font-size: 12px; color: #7f8c8d;">
             This report was automatically generated using SEC Edgar data. 
-            View your full history at <a href="https://market-intelligence-9wc.pages.dev/">Market Intelligence Hub</a>.
+            View your full history at <a href="https://infotop.onrender.com">Market Intelligence Hub</a>.
         </p>
     </div>
     """
