@@ -66,23 +66,26 @@
 
         .nav-links a:hover { color: var(--gold); }
 
-        /* Hero Section */
-        header { padding: 80px 50px 120px; text-align: center; background: white; }
+        /* --- HERO SECTION UPDATED --- */
+        header { 
+            padding: 20px 50px 80px; /* Massively reduced top (20px), reduced bottom (80px) */
+            text-align: center; 
+            background: white; 
+        }
         
-        /* UPDATED: SUBSTANTIALLY BIGGER HERO LOGO */
         .hero-logo {
-            width: 240px; /* Increased from 140px */
+            width: 340px; /* Even bigger logo */
             height: auto;
-            margin-bottom: 40px;
-            filter: drop-shadow(0px 10px 15px rgba(0,0,0,0.05)); /* Subtle depth */
+            margin-bottom: 20px; /* Reduced space below logo */
+            filter: drop-shadow(0px 10px 20px rgba(0,0,0,0.08));
             transition: transform 0.4s ease;
         }
         
         .hero-logo:hover {
-            transform: scale(1.02); /* Very subtle interaction */
+            transform: scale(1.02);
         }
 
-        header p.pre-title { font-size: 0.8rem; color: var(--gold); text-transform: uppercase; letter-spacing: 5px; font-weight: 700; margin-bottom: 25px; }
+        header p.pre-title { font-size: 0.8rem; color: var(--gold); text-transform: uppercase; letter-spacing: 5px; font-weight: 700; margin-bottom: 20px; }
         header h1 { font-family: 'Playfair Display', serif; font-size: 4.2rem; margin: 0 auto 25px; max-width: 1000px; line-height: 1.1; }
         header p.description { font-size: 1.25rem; color: var(--muted); max-width: 650px; margin: 0 auto 50px; font-weight: 300; }
 
@@ -117,7 +120,8 @@
         @media (max-width: 900px) {
             .module-container, .grid { grid-template-columns: 1fr; }
             header h1 { font-size: 2.5rem; }
-            .hero-logo { width: 160px; }
+            .hero-logo { width: 220px; } /* Scaled for mobile */
+            header { padding: 20px 20px 60px; }
             nav { padding: 20px; }
             .nav-links { display: none; }
         }
@@ -145,9 +149,7 @@
     </nav>
 
     <header>
-        <!-- LARGE CENTER LOGO -->
         <img src="/images/logo.png" alt="InfoTop Primary Seal" class="hero-logo">
-        
         <p class="pre-title">Strategic Domain for Global Investors</p>
         <h1>Automated Intelligence for the Modern Capitalist.</h1>
         <p class="description">Leveraging direct SEC Edgar data and algorithmic analysis to provide financial clarity in a volatile global market.</p>
