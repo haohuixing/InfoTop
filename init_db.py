@@ -1,4 +1,3 @@
-# init_db.py
 import os
 from dotenv import load_dotenv
 from sqlalchemy import create_engine, text
@@ -6,7 +5,6 @@ from sqlalchemy.engine import URL
 
 load_dotenv()
 
-# 1. Setup connection (using your existing logic)
 connection_url = URL.create(
     drivername="postgresql",
     username=os.getenv("DB_USER"),
@@ -17,25 +15,41 @@ connection_url = URL.create(
 )
 engine = create_engine(connection_url)
 
-# 2. The SQL command to create the orders table
-# We use 'IF NOT EXISTS' so it doesn't error out if you run it twice
-create_table_query = """
-CREATE TABLE IF NOT EXISTS report_requests (
-    id SERIAL PRIMARY KEY,
-    ticker VARCHAR(10) NOT NULL,
-    user_email VARCHAR(255) NOT NULL,
-    status VARCHAR(20) DEFAULT 'pending',
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-"""
+# This script creates BOTH tables needed for the app
+sql_commands = [
+    """
+    CREATE TABLE IF NOT EXISTS report_requests (
+        id SERIAL PRIMARY KEY,
+        ticker VARCHAR(10) NOT NULL,
+        user_email VARCHAR(255) NOT NULL,
+        status VARCHAR(20) DEFAULT 'pending',
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    );
+    """,
+    """
+    CREATE TABLE IF NOT EXISTS revenue_growth_tracker (
+        id SERIAL PRIMARY KEY,
+        ticker VARCHAR(10),
+        current_period VARCHAR(50),
+        prior_period VARCHAR(50),
+        revenue_current NUMERIC,
+        revenue_prior NUMERIC,
+        growth_pct NUMERIC,
+        summary TEXT,
+        sentiment VARCHAR(20),
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    );
+    """
+]
 
 def init():
     try:
         with engine.connect() as conn:
-            print("🔗 Connecting to database...")
-            conn.execute(text(create_table_query))
+            print("🔗 Connecting to Supabase...")
+            for cmd in sql_commands:
+                conn.execute(text(cmd))
             conn.commit()
-            print("✅ Table 'report_requests' is ready!")
+            print("✅ Both tables ('report_requests' & 'revenue_growth_tracker') are ready!")
             
             # Double check: List the tables
             result = conn.execute(text("SELECT table_name FROM information_schema.tables WHERE table_schema='public';"))
