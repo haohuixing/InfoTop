@@ -1,56 +1,343 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Market Intelligence</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Capital Intelligence | Strategic Market Analysis</title>
+    <!-- Import Premium Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #0f172a; color: #f8fafc; padding: 50px; line-height: 1.6; }
-        .container { max-width: 800px; margin: auto; }
-        h1 { border-bottom: 2px solid #1e293b; padding-bottom: 10px; color: #38bdf8; }
-        .msg-box { background: #064e3b; color: #34d399; padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #059669; }
-        .form-box { background: #1e293b; padding: 25px; border-radius: 12px; margin-bottom: 40px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
-        h3 { margin-top: 0; color: #94a3b8; }
-        input { padding: 12px; margin-bottom: 10px; border-radius: 6px; border: 1px solid #334155; background: #0f172a; color: white; width: calc(50% - 22px); }
-        button { padding: 12px 24px; background: #38bdf8; color: #0f172a; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; transition: background 0.3s; }
-        button:hover { background: #7dd3fc; }
-        .report-card { border-left: 5px solid #38bdf8; background: #1e293b; padding: 20px; margin: 15px 0; border-radius: 0 8px 8px 0; }
-        .ticker-head { font-size: 1.2rem; font-weight: bold; color: #38bdf8; }
-        .growth-tag { color: #94a3b8; font-size: 0.9rem; }
+        :root {
+            --bg: #fdfdfc;
+            --gold: #c5a059;
+            --charcoal: #1a1a1a;
+            --muted: #666;
+            --border: #e8e8e3;
+        }
+
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background: var(--bg); 
+            color: var(--charcoal); 
+            margin: 0; 
+            padding: 0;
+            line-height: 1.6; 
+        }
+        
+        /* Message Box */
+        .msg-box { 
+            background: var(--gold); 
+            color: white; 
+            padding: 15px; 
+            text-align: center; 
+            font-weight: 600;
+            position: relative;
+            z-index: 101;
+        }
+
+        /* Navbar */
+        nav { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            padding: 25px 50px; 
+            border-bottom: 1px solid var(--border); 
+            background: white; 
+            position: sticky; /* Fixed CSS bug */
+            top: 0; 
+            z-index: 100; 
+        }
+
+        .logo { 
+            font-family: 'Playfair Display', serif; 
+            font-weight: 700; 
+            font-size: 1.5rem; 
+            letter-spacing: -1px; 
+            text-decoration: none;
+            color: var(--charcoal);
+        }
+
+        .nav-links a { 
+            margin-left: 30px; 
+            text-decoration: none; 
+            color: var(--charcoal); 
+            font-size: 0.85rem; 
+            font-weight: 600; 
+            text-transform: uppercase; 
+            letter-spacing: 1px; 
+        }
+
+        /* Hero Section */
+        header { 
+            padding: 120px 50px; 
+            text-align: center; 
+            background: white; 
+        }
+
+        header p.pre-title { 
+            font-size: 0.8rem;
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        header h1 { 
+            font-family: 'Playfair Display', serif; 
+            font-size: 4rem; 
+            margin: 0 auto 20px; 
+            max-width: 900px; 
+            line-height: 1.1; 
+        }
+
+        header p.description { 
+            font-size: 1.2rem; 
+            color: var(--muted); 
+            max-width: 600px; 
+            margin: 0 auto 40px; 
+            font-weight: 300; 
+        }
+
+        .cta-button { 
+            background: var(--charcoal); 
+            color: white; 
+            padding: 18px 45px; 
+            text-decoration: none; 
+            font-weight: 600; 
+            text-transform: uppercase; 
+            letter-spacing: 2px; 
+            font-size: 0.8rem; 
+            transition: 0.3s; 
+        }
+
+        .cta-button:hover { 
+            background: var(--gold); 
+        }
+
+        /* Financial Tool Module */
+        .tool-section { 
+            background: white; 
+            padding: 100px 50px; 
+            border-top: 1px solid var(--border); 
+        }
+
+        .module-container { 
+            max-width: 1100px; 
+            margin: auto; 
+            display: grid; 
+            grid-template-columns: 1fr 1fr; 
+            gap: 80px; 
+            align-items: center;
+        }
+        
+        .tool-info h2 { 
+            font-family: 'Playfair Display', serif; 
+            font-size: 2.5rem; 
+            margin-top: 0; 
+        }
+
+        .tool-info p { 
+            color: var(--muted); 
+            font-size: 1.1rem; 
+            margin-bottom: 30px; 
+        }
+
+        .order-card { 
+            background: var(--bg); 
+            padding: 40px; 
+            border: 1px solid var(--border); 
+            box-shadow: 20px 20px 0px rgba(197, 160, 89, 0.1); 
+        }
+
+        .order-card label {
+            font-size: 0.7rem; 
+            font-weight: 700; 
+            margin-bottom: 8px; 
+            display: block;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .order-card input { 
+            display: block; 
+            width: 100%; 
+            padding: 15px; 
+            margin-bottom: 20px; 
+            border: 1px solid var(--border); 
+            box-sizing: border-box; 
+            font-size: 1rem; 
+            background: white;
+        }
+
+        .order-card button { 
+            width: 100%; 
+            padding: 20px; 
+            background: var(--charcoal); 
+            color: white; 
+            border: none; 
+            font-weight: 700; 
+            text-transform: uppercase; 
+            letter-spacing: 2px;
+            cursor: pointer; 
+            transition: 0.3s; 
+        }
+
+        .order-card button:hover { 
+            background: var(--gold); 
+        }
+
+        /* Intelligence Feed */
+        .feed-section { 
+            padding: 100px 50px; 
+            background: var(--bg); 
+        }
+
+        .feed-header { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: flex-end; 
+            max-width: 1100px; 
+            margin: 0 auto 50px; 
+            border-bottom: 2px solid var(--charcoal); 
+            padding-bottom: 20px; 
+        }
+
+        .feed-header h2 { 
+            font-family: 'Playfair Display', serif; 
+            font-size: 2.2rem; 
+            margin: 0; 
+        }
+        
+        .grid { 
+            display: grid; 
+            grid-template-columns: repeat(3, 1fr); 
+            gap: 50px; 
+            max-width: 1100px; 
+            margin: auto; 
+        }
+
+        .report-item { 
+            border-bottom: 1px solid var(--border); 
+            padding-bottom: 30px; 
+            transition: 0.3s;
+        }
+
+        .ticker-label { 
+            color: var(--gold); 
+            font-weight: 700; 
+            font-size: 0.8rem; 
+            letter-spacing: 1px; 
+            text-transform: uppercase;
+        }
+
+        .report-title { 
+            font-family: 'Playfair Display', serif; 
+            font-size: 1.5rem; 
+            margin: 10px 0; 
+            font-weight: 700;
+        }
+
+        .report-summary { 
+            font-size: 0.95rem; 
+            color: var(--muted); 
+            display: -webkit-box; 
+            -webkit-line-clamp: 3; 
+            -webkit-box-orient: vertical; 
+            overflow: hidden; 
+            line-height: 1.7;
+        }
+
+        footer { 
+            text-align: center; 
+            padding: 80px; 
+            border-top: 1px solid var(--border); 
+            font-size: 0.75rem; 
+            color: var(--muted); 
+            text-transform: uppercase; 
+            letter-spacing: 2px; 
+            background: white;
+        }
+
+        @media (max-width: 900px) {
+            .module-container, .grid { grid-template-columns: 1fr; }
+            header h1 { font-size: 2.5rem; }
+            nav { padding: 20px; }
+            .nav-links { display: none; }
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>📈 Market Intelligence Hub</h1>
 
-        <!-- 1. Success Message Display -->
-        {% if msg %}
-        <div class="msg-box">✅ {{ msg }}</div>
-        {% endif %}
+    {% if msg %}
+    <div class="msg-box">✅ {{ msg }}</div>
+    {% endif %}
 
-        <div class="form-box">
-            <h3>Order a New Report</h3>
-            <!-- 
-               Best Practice: Use a relative path /order-report. 
-               This ensures it works locally and on Render without needing the variable.
-            -->
-            <form action="/order-report" method="post">
-                <input type="text" name="ticker" placeholder="Ticker (e.g. NVDA)" required>
-                <input type="email" name="email" placeholder="Your Email" required>
-                <br>
-                <button type="submit">Generate Financial Report</button>
-            </form>
+    <nav>
+        <a href="/" class="logo">CAPITAL INTELLIGENCE</a>
+        <div class="nav-links">
+            <a href="#tool">Analysis</a>
+            <a href="#">Sovereignty</a>
+            <a href="#">About</a>
         </div>
+    </nav>
 
-        <h2>Latest Market Insights</h2>
-        {% if reports %}
-            {% for report in reports %}
-            <div class="report-card">
-                <div class="ticker-head">{{ report.ticker }} <span class="growth-tag">| Growth: {{ report.growth_pct }}%</span></div>
-                <p>{{ report.summary }}</p>
+    <header>
+        <p class="pre-title">Strategic Domain for Global Investors</p>
+        <h1>Automated Intelligence for the Modern Capitalist.</h1>
+        <p class="description">Leveraging direct SEC Edgar data and algorithmic analysis to provide financial clarity in a volatile global market.</p>
+        <a href="#tool" class="cta-button">Request Intelligence</a>
+    </header>
+
+    <section class="tool-section" id="tool">
+        <div class="module-container">
+            <div class="tool-info">
+                <h2>Proprietary Extraction Engine</h2>
+                <p>Gain access to immediate revenue growth analysis on any publicly traded US company. We bypass the media noise and pull directly from official 10-K and 10-Q filings.</p>
+                <ul style="list-style: none; padding: 0; color: var(--muted);">
+                    <li style="margin-bottom: 15px;">✔ Direct SEC Data Connection</li>
+                    <li style="margin-bottom: 15px;">✔ Year-over-Year Revenue Audits</li>
+                    <li style="margin-bottom: 15px;">✔ Instant Email Dispatch</li>
+                </ul>
             </div>
-            {% endfor %}
-        {% else %}
-            <p style="color: #64748b;">No reports generated yet. Place an order above!</p>
-        {% endif %}
-    </div>
+            <div class="order-card">
+                <form action="/order-report" method="post">
+                    <label>Company Ticker</label>
+                    <input type="text" name="ticker" placeholder="e.g. NVDA" required>
+                    <label>Delivery Email</label>
+                    <input type="email" name="email" placeholder="name@domain.com" required>
+                    <button type="submit">Execute Analysis</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <section class="feed-section">
+        <div class="feed-header">
+            <h2>The Archive</h2>
+            <div style="font-size: 0.8rem; font-weight: 700; color: var(--gold); text-transform: uppercase; letter-spacing: 2px;">Latest Updates</div>
+        </div>
+        <div class="grid">
+            {% if reports %}
+                {% for report in reports %}
+                <div class="report-item">
+                    <div class="ticker-label">{{ report.ticker }} | Growth: {{ report.growth_pct }}%</div>
+                    <div class="report-title">{{ report.sentiment }}</div>
+                    <p class="report-summary">{{ report.summary }}</p>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div style="grid-column: span 3; text-align: center; color: var(--muted); padding: 40px;">
+                    The intelligence archive is currently empty.
+                </div>
+            {% endif %}
+        </div>
+    </section>
+
+    <footer>
+        &copy; 2024 Capital Intelligence. All Rights Reserved. Private & Confidential.
+    </footer>
+
 </body>
 </html>
