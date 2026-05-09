@@ -10,6 +10,9 @@ load_dotenv()
 app = FastAPI()
 templates = Jinja2Templates(directory="templates")
 
+# Master URL from .env
+BASE_URL = os.getenv("BASE_URL", "http://localhost:8000")
+
 connection_url = URL.create(
     drivername="postgresql",
     username=os.getenv("DB_USER"),
@@ -22,13 +25,17 @@ engine = create_engine(connection_url)
 
 @app.get("/")
 async def home(request: Request, msg: str = None):
-    # Pull reports directly from the DB
     query = text("SELECT ticker, growth_pct, summary FROM revenue_growth_tracker ORDER BY created_at DESC LIMIT 10")
     with engine.connect() as conn:
         result = conn.execute(query)
         reports = [dict(row) for row in result.mappings()]
 
-    return templates.TemplateResponse("index.html", {"request": request, "reports": reports, "msg": msg})
+    return templates.TemplateResponse("index.html", {
+        "request": request, 
+        "reports": reports, 
+        "msg": msg,
+        "base_url": BASE_URL
+    })
 
 @app.post("/order-report")
 async def order_report(ticker: str = Form(...), email: str = Form(...)):
