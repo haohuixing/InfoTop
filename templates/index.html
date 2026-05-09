@@ -3,7 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Capital Intelligence | Strategic Market Analysis</title>
+    
+    <!-- 1. TAB NAME & TAB ICON -->
+    <title>InfoTop</title>
+    <link rel="icon" type="image/png" href="/images/logo.png">
+
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     
     <style>
@@ -17,15 +21,14 @@
 
         body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--charcoal); margin: 0; padding: 0; line-height: 1.6; }
         
-        /* Message Box */
         .msg-box { background: var(--gold); color: white; padding: 15px; text-align: center; font-weight: 600; position: relative; z-index: 101; }
 
-        /* Navbar */
+        /* 2. LOGO & TEXT ALIGNMENT */
         nav { 
             display: flex; 
             justify-content: space-between; 
             align-items: center; 
-            padding: 15px 50px; /* Reduced padding slightly for logo */
+            padding: 15px 50px; 
             border-bottom: 1px solid var(--border); 
             background: white; 
             position: sticky; 
@@ -36,12 +39,17 @@
         .logo { 
             display: flex;
             align-items: center;
+            gap: 15px; /* Space between logo and text */
             text-decoration: none;
+            color: var(--charcoal);
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            font-size: 1.5rem;
+            letter-spacing: -1px;
         }
 
-        /* Logo image sizing */
         .logo-img {
-            height: 45px; /* Adjust this to make your logo look right */
+            height: 40px; /* Slightly smaller to match text height */
             width: auto;
             display: block;
         }
@@ -106,7 +114,8 @@
 
     <nav>
         <a href="/" class="logo">
-            <img src="/images/logo.png" alt="Capital Intelligence" class="logo-img">
+            <img src="/images/logo.png" alt="Logo" class="logo-img">
+            <span>InfoTop</span>
         </a>
         <div class="nav-links">
             <a href="#tool">Analysis</a>
@@ -119,9 +128,10 @@
         <p class="pre-title">Strategic Domain for Global Investors</p>
         <h1>Automated Intelligence for the Modern Capitalist.</h1>
         <p class="description">Leveraging direct SEC Edgar data and algorithmic analysis to provide financial clarity in a volatile global market.</p>
-        <a href="#tool" class="cta-button">Request Intelligence</a>
+        <a href="#tool" class="cta-button">Execute Analysis</a>
     </header>
 
+    <!-- ... rest of the section code remains same as before ... -->
     <section class="tool-section" id="tool">
         <div class="module-container">
             <div class="tool-info">
@@ -168,7 +178,7 @@
     </section>
 
     <footer>
-        &copy; 2024 Capital Intelligence. All Rights Reserved. Private & Confidential.
+        &copy; 2024 InfoTop. All Rights Reserved. Private & Confidential.
     </footer>
 
 </body>
