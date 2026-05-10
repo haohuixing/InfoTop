@@ -15,7 +15,7 @@ connection_url = URL.create(
 )
 engine = create_engine(connection_url)
 
-# This script creates BOTH tables needed for the app
+# This script creates ALL THREE tables needed for the app
 sql_commands = [
     """
     CREATE TABLE IF NOT EXISTS report_requests (
@@ -39,17 +39,45 @@ sql_commands = [
         sentiment VARCHAR(20),
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );
+    """,
+    """
+    CREATE TABLE IF NOT EXISTS success_stories (
+        id SERIAL PRIMARY KEY,
+        title VARCHAR(255) NOT NULL,
+        client_name VARCHAR(100),
+        content TEXT NOT NULL,
+        image_url VARCHAR(255),
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    );
     """
 ]
 
 def init():
     try:
         with engine.connect() as conn:
-            print("🔗 Connecting to Supabase...")
+            print("🔗 Connecting to Database...")
+            
+            # Create Tables
             for cmd in sql_commands:
                 conn.execute(text(cmd))
+            
+            # Optional: Add a sample story if the table is empty
+            check_stories = conn.execute(text("SELECT count(*) FROM success_stories")).scalar()
+            if check_stories == 0:
+                print("📝 Adding sample success story...")
+                sample_story = """
+                INSERT INTO success_stories (title, client_name, content, image_url) 
+                VALUES (
+                    'Strategic Capital Migration', 
+                    'The Miller Group', 
+                    'Leveraged InfoTop raw data extraction to identify high-growth zones, resulting in a successful residency-by-investment transition.', 
+                    '/images/logo.png'
+                );
+                """
+                conn.execute(text(sample_story))
+
             conn.commit()
-            print("✅ Both tables ('report_requests' & 'revenue_growth_tracker') are ready!")
+            print("✅ All tables ('report_requests', 'revenue_growth_tracker', & 'success_stories') are ready!")
             
             # Double check: List the tables
             result = conn.execute(text("SELECT table_name FROM information_schema.tables WHERE table_schema='public';"))
