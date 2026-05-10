@@ -48,28 +48,28 @@
             font-family: 'Playfair Display', serif; font-weight: 700; font-size: clamp(1.1rem, 2vw, 1.4rem);
         }
 
-        .logo-img { height: clamp(30px, 4vh, 40px); width: auto; display: block; }
+        .logo-img { height: clamp(30px, 7vh, 70px); width: auto; display: block; }
 
         /* Navigation Links */
         .nav-links { display: flex; align-items: center; }
         .nav-links a { 
             margin-left: 2vw; text-decoration: none; color: var(--charcoal); 
             font-size: clamp(0.7rem, 1vw, 0.85rem); font-weight: 600; 
-            text-transform: uppercase; letter-spacing: 1.5px; transition: 0.2s;
+            text-transform: uppercase; letter-spacing: 1.5px; transition: 0.3s ease;
         }
         .nav-links a:hover { color: var(--gold); }
 
-        /* --- MOBILE MENU LOGIC (Pure CSS) --- */
-        #menu-toggle { display: none; } /* Hide the checkbox */
-        .menu-icon { display: none; cursor: pointer; font-weight: 700; font-size: 0.8rem; letter-spacing: 2px; color: var(--charcoal); text-transform: uppercase; border: 1px solid var(--border); padding: 5px 10px; }
+        /* --- MOBILE MENU LOGIC --- */
+        #menu-toggle { display: none; }
+        .menu-icon { display: none; cursor: pointer; font-weight: 700; font-size: 0.8rem; letter-spacing: 2px; color: var(--charcoal); text-transform: uppercase; border: 1px solid var(--border); padding: 5px 10px; transition: 0.3s; }
+        .menu-icon:hover { background: var(--charcoal); color: white; }
 
         @media (max-width: 768px) {
-            .menu-icon { display: block; } /* Show "Menu" button on mobile */
-            
+            .menu-icon { display: block; }
             .nav-links {
-                display: none; /* Hide standard links */
+                display: none;
                 position: absolute;
-                top: 100%; /* Slide down from nav */
+                top: 100%;
                 left: 0;
                 width: 100%;
                 background: white;
@@ -78,10 +78,7 @@
                 border-bottom: 1px solid var(--border);
                 box-shadow: 0 10px 20px rgba(0,0,0,0.05);
             }
-
             .nav-links a { margin: 15px 5vw; font-size: 0.9rem; }
-
-            /* When checkbox is checked, show the menu */
             #menu-toggle:checked ~ .nav-links { display: flex; }
         }
 
@@ -93,10 +90,19 @@
         }
         
         .hero-logo {
-            width: clamp(200px, 50vw, 550px); 
+            width: clamp(125px, 35vw, 400px); 
             height: auto;
-            margin-bottom: 0.5rem;
+            margin-top: -1rem;
+            margin-bottom: -1rem;
             filter: drop-shadow(0px 10px 20px rgba(0,0,0,0.08));
+            /* ADDED TRANSITION FOR HOVER */
+            transition: transform 0.5s cubic-bezier(0.165, 0.84, 0.44, 1), filter 0.5s ease;
+        }
+
+        /* LOGO HOVER EFFECT */
+        .hero-logo:hover {
+            transform: scale(1.04);
+            filter: drop-shadow(0px 15px 30px rgba(0,0,0,0.12));
         }
         
         header p.pre-title { 
@@ -115,10 +121,27 @@
             max-width: 40rem; margin: 0 auto 3rem; font-weight: 300; 
         }
 
+        /* BUTTON BASE STYLE */
         .cta-button { 
-            background: var(--charcoal); color: white; padding: 1.2rem 3rem; 
-            text-decoration: none; font-weight: 600; text-transform: uppercase; 
-            letter-spacing: 2px; font-size: clamp(0.7rem, 1vw, 0.85rem); transition: 0.3s; 
+            display: inline-block;
+            background: var(--charcoal); 
+            color: white; 
+            padding: 1.2rem 3rem; 
+            text-decoration: none; 
+            font-weight: 600; 
+            text-transform: uppercase; 
+            letter-spacing: 2px; 
+            font-size: clamp(0.7rem, 1vw, 0.85rem); 
+            transition: all 0.3s ease; /* Smooth transition for all properties */
+            border: none;
+            cursor: pointer;
+        }
+
+        /* BUTTON HOVER EFFECT */
+        .cta-button:hover {
+            background: var(--gold);
+            transform: translateY(-3px); /* Subtle lift */
+            box-shadow: 0 8px 20px rgba(197, 160, 89, 0.3);
         }
 
         /* --- MODULES --- */
@@ -136,13 +159,15 @@
             border: 1px solid var(--border); box-shadow: 1.2rem 1.2rem 0px rgba(197, 160, 89, 0.1); 
         }
 
-        .order-card input { width: 100%; padding: 1rem; margin-bottom: 1.2rem; border: 1px solid var(--border); box-sizing: border-box; font-size: 1rem; background: white; }
+        .order-card input { width: 100%; padding: 1rem; margin-bottom: 1.2rem; border: 1px solid var(--border); box-sizing: border-box; font-size: 1rem; background: white; transition: border 0.3s; }
+        .order-card input:focus { outline: none; border: 1px solid var(--gold); }
 
         /* --- ARCHIVE GRID --- */
         .feed-section { padding: clamp(3rem, 10vh, 6rem) 5vw; background: var(--bg); }
         .feed-header { display: flex; justify-content: space-between; align-items: flex-end; max-width: 1200px; margin: 0 auto 3rem; border-bottom: 2px solid var(--charcoal); padding-bottom: 1rem; }
         .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 3rem; max-width: 1200px; margin: auto; }
-        .report-item { border-bottom: 1px solid var(--border); padding-bottom: 2rem; }
+        .report-item { border-bottom: 1px solid var(--border); padding-bottom: 2rem; transition: transform 0.3s; }
+        .report-item:hover { transform: translateX(5px); } /* Subtle slide on entry hover */
 
         footer { text-align: center; padding: 5rem 5vw; border-top: 1px solid var(--border); font-size: 0.75rem; color: var(--muted); text-transform: uppercase; letter-spacing: 2px; background: white; }
     </style>
@@ -159,7 +184,6 @@
             <span>InfoTop</span>
         </a>
 
-        <!-- MOBILE MENU TRIGGER -->
         <input type="checkbox" id="menu-toggle">
         <label for="menu-toggle" class="menu-icon">Menu</label>
 
@@ -198,7 +222,7 @@
                     <input type="text" name="ticker" placeholder="e.g. NVDA" required>
                     <label style="font-size: 0.7rem; font-weight: 700; margin-bottom: 0.5rem; display: block; text-transform: uppercase;">Email</label>
                     <input type="email" name="email" placeholder="name@domain.com" required>
-                    <button type="submit" class="cta-button" style="width: 100%; border: none; cursor: pointer; padding: 1.2rem;">Execute Analysis</button>
+                    <button type="submit" class="cta-button" style="width: 100%;">Execute Analysis</button>
                 </form>
             </div>
         </div>
