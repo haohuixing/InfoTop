@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Success Stories | InfoTop</title>
+    <link rel="icon" type="image/png" href="/images/logo.png">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root { --bg: #fdfdfc; --gold: #c5a059; --charcoal: #1a1a1a; --muted: #666; --border: #e8e8e3; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--charcoal); margin: 0; line-height: 1.6; }
+        
+        nav { display: flex; justify-content: space-between; align-items: center; padding: 1rem 5vw; border-bottom: 1px solid var(--border); background: white; position: sticky; top: 0; z-index: 1000; }
+        .logo { display: flex; align-items: center; gap: 0.8rem; text-decoration: none; color: var(--charcoal); font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1.4rem; }
+        .logo-img { height: 40px; }
+        .nav-links a { margin-left: 2vw; text-decoration: none; color: var(--charcoal); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; }
+
+        header { padding: 5rem 5vw; text-align: center; background: white; border-bottom: 1px solid var(--border); }
+        header h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.5rem, 5vw, 4rem); margin: 0; }
+        header p { color: var(--gold); text-transform: uppercase; letter-spacing: 5px; font-weight: 700; font-size: 0.8rem; margin-bottom: 1rem; }
+
+        .container { max-width: 1000px; margin: 4rem auto; padding: 0 5vw; }
+        
+        .story-card { 
+            display: grid; 
+            grid-template-columns: 300px 1fr; 
+            gap: 3rem; 
+            margin-bottom: 5rem; 
+            align-items: start;
+        }
+
+        .story-image-wrap {
+            border: 1px solid var(--border);
+            padding: 10px;
+            background: white;
+            box-shadow: 10px 10px 0px rgba(197, 160, 89, 0.1);
+        }
+
+        .story-image { 
+            width: 100%; 
+            aspect-ratio: 1/1;
+            object-fit: cover; 
+            filter: grayscale(100%);
+            transition: 0.5s ease;
+            display: block;
+        }
+
+        .story-card:hover .story-image { filter: grayscale(0%); }
+
+        .story-meta { color: var(--gold); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 0.5rem; }
+        .story-title { font-family: 'Playfair Display', serif; font-size: 2.2rem; margin: 0.5rem 0 1.5rem; line-height: 1.2; }
+        .story-content { color: var(--muted); font-size: 1.1rem; font-weight: 300; line-height: 1.8; }
+
+        footer { text-align: center; padding: 5rem 5vw; border-top: 1px solid var(--border); font-size: 0.75rem; color: var(--muted); text-transform: uppercase; letter-spacing: 2px; }
+
+        @media (max-width: 768px) {
+            .story-card { grid-template-columns: 1fr; gap: 2rem; }
+            .story-title { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="/" class="logo">
+            <img src="/images/logo.png" alt="InfoTop Logo" class="logo-img">
+            <span>InfoTop</span>
+        </a>
+        <div class="nav-links">
+            <a href="/">Analysis</a>
+            <a href="/stories" style="color: var(--gold);">Stories</a>
+            <a href="#">About</a>
+        </div>
+    </nav>
+
+    <header>
+        <p>Global Intelligence Success</p>
+        <h1>Case Archives</h1>
+    </header>
+
+    <div class="container">
+        {% if stories %}
+            {% for story in stories %}
+            <article class="story-card">
+                <div class="story-image-wrap">
+                    <img src="{{ story.image_url }}" alt="Success Story" class="story-image">
+                </div>
+                <div class="story-body">
+                    <div class="story-meta">Client: {{ story.client_name }}</div>
+                    <h2 class="story-title">{{ story.title }}</h2>
+                    <p class="story-content">{{ story.content }}</p>
+                </div>
+            </article>
+            {% endfor %}
+        {% else %}
+            <div style="text-align: center; padding: 5rem; color: var(--muted);">
+                Archive is currently being decrypted.
+            </div>
+        {% endif %}
+    </div>
+
+    <footer>
+        &copy; 2024 InfoTop. Private & Confidential.
+    </footer>
+
+</body>
+</html>
