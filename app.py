@@ -11,7 +11,7 @@ load_dotenv()
 app = FastAPI()
 templates = Jinja2Templates(directory="templates")
 
-# Mount images folder (Ensures your logo shows in navbar AND browser tab)
+# Mount images folder
 if not os.path.exists("images"):
     os.makedirs("images")
 app.mount("/images", StaticFiles(directory="images"), name="images")
@@ -28,30 +28,42 @@ connection_url = URL.create(
 )
 engine = create_engine(connection_url)
 
+# REMOVED 'async' - FastAPI will now run this in a thread pool
 @app.get("/")
-async def home(request: Request, msg: str = None):
-    query = text("SELECT ticker, growth_pct, summary, sentiment FROM revenue_growth_tracker ORDER BY created_at DESC LIMIT 6")
+def home(request: Request, msg: str = None):
+    query = text("""
+        SELECT ticker, growth_pct, summary, sentiment 
+        FROM revenue_growth_tracker 
+        ORDER BY created_at DESC LIMIT 6
+    """)
     try:
         with engine.connect() as conn:
             result = conn.execute(query)
+            # mappings() converts the row to a dictionary-like object
             reports = [dict(row) for row in result.mappings()]
     except Exception as e:
         print(f"❌ DB Error: {e}")
         reports = []
 
     return templates.TemplateResponse(
-        request=request,
         name="index.html",
-        context={"reports": reports, "msg": msg, "base_url": BASE_URL}
+        context={"request": request, "reports": reports, "msg": msg, "base_url": BASE_URL}
     )
 
+# REMOVED 'async' - Keeps the DB connection from blocking other users
 @app.post("/order-report")
-async def order_report(ticker: str = Form(...), email: str = Form(...)):
-    query = text("INSERT INTO report_requests (ticker, user_email, status) VALUES (:t, :e, 'pending')")
+def order_report(ticker: str = Form(...), email: str = Form(...)):
+    query = text("""
+        INSERT INTO report_requests (ticker, user_email, status) 
+        VALUES (:t, :e, 'pending')
+    """)
     try:
         with engine.connect() as conn:
-            conn.execute(query, {"t": ticker.upper().strip(), "e": email.lower().strip()})
-            conn.commit()
+            conn.execute(query, {
+                "t": ticker.upper().strip(), 
+                "e": email.lower().strip()
+            })
+            conn.commit() # Important: Save changes to DB
     except Exception as e:
         print(f"❌ Order Error: {e}")
         return RedirectResponse(url="/?msg=Database+Error.", status_code=303)
