@@ -28,42 +28,49 @@ connection_url = URL.create(
 )
 engine = create_engine(connection_url)
 
-# REMOVED 'async' - FastAPI will now run this in a thread pool
 @app.get("/")
 def home(request: Request, msg: str = None):
-    query = text("""
-        SELECT ticker, growth_pct, summary, sentiment 
-        FROM revenue_growth_tracker 
-        ORDER BY created_at DESC LIMIT 6
-    """)
+    query = text("SELECT ticker, growth_pct, summary, sentiment FROM revenue_growth_tracker ORDER BY created_at DESC LIMIT 6")
     try:
         with engine.connect() as conn:
             result = conn.execute(query)
-            # mappings() converts the row to a dictionary-like object
             reports = [dict(row) for row in result.mappings()]
     except Exception as e:
         print(f"❌ DB Error: {e}")
         reports = []
 
+    # FIXED: Added request=request as the first argument
     return templates.TemplateResponse(
+        request=request,
         name="index.html",
-        context={"request": request, "reports": reports, "msg": msg, "base_url": BASE_URL}
+        context={"reports": reports, "msg": msg, "base_url": BASE_URL}
     )
 
-# REMOVED 'async' - Keeps the DB connection from blocking other users
-@app.post("/order-report")
-def order_report(ticker: str = Form(...), email: str = Form(...)):
-    query = text("""
-        INSERT INTO report_requests (ticker, user_email, status) 
-        VALUES (:t, :e, 'pending')
-    """)
+@app.get("/stories")
+def stories_page(request: Request):
+    query = text("SELECT title, client_name, content, image_url FROM success_stories ORDER BY created_at DESC")
     try:
         with engine.connect() as conn:
-            conn.execute(query, {
-                "t": ticker.upper().strip(), 
-                "e": email.lower().strip()
-            })
-            conn.commit() # Important: Save changes to DB
+            result = conn.execute(query)
+            stories = [dict(row) for row in result.mappings()]
+    except Exception as e:
+        print(f"❌ DB Error: {e}")
+        stories = []
+
+    # FIXED: Added request=request as the first argument
+    return templates.TemplateResponse(
+        request=request,
+        name="stories.html",
+        context={"stories": stories, "base_url": BASE_URL}
+    )
+
+@app.post("/order-report")
+def order_report(ticker: str = Form(...), email: str = Form(...)):
+    query = text("INSERT INTO report_requests (ticker, user_email, status) VALUES (:t, :e, 'pending')")
+    try:
+        with engine.connect() as conn:
+            conn.execute(query, {"t": ticker.upper().strip(), "e": email.lower().strip()})
+            conn.commit()
     except Exception as e:
         print(f"❌ Order Error: {e}")
         return RedirectResponse(url="/?msg=Database+Error.", status_code=303)
