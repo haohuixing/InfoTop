@@ -1,5 +1,3 @@
-#app.py
-
 import os
 from fastapi import FastAPI, Request, Form
 from fastapi.templating import Jinja2Templates
@@ -50,6 +48,7 @@ def home(request: Request, msg: str = None):
 
 @app.get("/stories")
 def stories_page(request: Request):
+    # This query looks for a table named 'success_stories'
     query = text("SELECT title, client_name, content, image_url FROM success_stories ORDER BY created_at DESC")
     try:
         with engine.connect() as conn:
@@ -59,11 +58,18 @@ def stories_page(request: Request):
         print(f"❌ DB Error: {e}")
         stories = []
 
-    # FIXED: Added request=request as the first argument
     return templates.TemplateResponse(
-        request=request,
+        request=request,  # THIS MUST BE HERE
         name="stories.html",
         context={"stories": stories, "base_url": BASE_URL}
+    )
+
+@app.get("/about")
+def about_page(request: Request):
+    return templates.TemplateResponse(
+        request=request,
+        name="about.html",
+        context={"base_url": BASE_URL}
     )
 
 @app.post("/order-report")
