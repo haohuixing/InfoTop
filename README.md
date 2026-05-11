@@ -31,3 +31,6 @@
   - Still need login/signup and such 
 - Implementation of middle-end AI LLM to process reports better instead of just gathering raw data and then stuffing it into a report
 - Include a readmefile on setting up database?
+- Add payment methods
+- Add "custom orders" for market warnings
+- Add more "stories" to the story page
