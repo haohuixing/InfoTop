@@ -34,3 +34,4 @@
 - Add payment methods
 - Add "custom orders" for market warnings
 - Add more "stories" to the story page
+- Add checking against sql injection or XSS
