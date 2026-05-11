@@ -7,9 +7,9 @@
 - Rename `.env.example` to `.env`
 - Edit all the things in `.env` to whatever you have for yourself
 - **DO NOT** publish your `.env` online, it probably has some sensitive information!
-
-### Make sure your .env is complete
+### cd to the directory 
 ### Run the database init file  to set up the database 
+- Run python init_db.py
 ### Run this in cmd prompt after cd "uvicorn app:app --reload to run the file" OR run "python app.py"
 ### Go to localhost:8000
 
