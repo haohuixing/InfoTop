@@ -1,6 +1,6 @@
 # Template readme file for now....
 
-## General tips:
+## What to do:
 
 ### Edit .env.example:
 
