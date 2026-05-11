@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>InfoTop | Capital Intelligence</title>
+    <link rel="icon" type="image/png" href="/images/logo.png">
+
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg: #fdfdfc;
+            --gold: #c5a059;
+            --charcoal: #1a1a1a;
+            --muted: #666;
+            --border: #e8e8e3;
+            font-size: 16px; 
+        }
+
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background: var(--bg); 
+            color: var(--charcoal); 
+            margin: 0; padding: 0; 
+            line-height: 1.6; 
+            overflow-x: hidden;
+            top: 0 !important; 
+        }
+
+        /* --- 100% RELIABLE TRANSLATE UI --- */
+
+        .goog-te-banner-frame.skiptranslate, #goog-gt-tt, .goog-te-balloon-frame, .goog-te-gadget img {
+            display: none !important;
+        }
+        #google_translate_element { display: none; }
+        body { top: 0px !important; }
+
+        .translate-wrapper {
+            position: relative;
+            display: inline-block;
+            margin-left: 2vw;
+        }
+
+        .translate-trigger {
+            background: none;
+            border: none;
+            color: var(--charcoal);
+            font-family: 'Inter', sans-serif;
+            font-size: clamp(0.7rem, 1vw, 0.85rem);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            cursor: pointer;
+            padding: 0;
+            transition: 0.3s;
+            /* Added for Globe Alignment */
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .translate-trigger svg {
+            transition: 0.3s ease;
+        }
+
+        .translate-trigger:hover { color: var(--gold); }
+        .translate-trigger:hover svg { stroke: var(--gold); }
+
+        .lang-menu {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            border: 1px solid var(--border);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            display: none; 
+            z-index: 2000;
+            min-width: 150px;
+            margin-top: 10px;
+        }
+
+        .lang-menu a {
+            display: block;
+            padding: 12px 20px;
+            color: var(--charcoal);
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 1px solid var(--border);
+            transition: 0.2s;
+            margin: 0 !important;
+        }
+
+        .lang-menu a:last-child { border-bottom: none; }
+        .lang-menu a:hover { background: var(--bg); color: var(--gold); }
+        .lang-menu.active { display: block; }
+
+        /* --- END TRANSLATE UI --- */
+
+        .msg-box { background: var(--gold); color: white; padding: 1.2rem; text-align: center; font-weight: 600; position: relative; z-index: 101; }
+
+        nav { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            padding: 1rem 5vw; 
+            border-bottom: 1px solid var(--border); 
+            background: white; 
+            position: sticky; 
+            top: 0; 
+            z-index: 1000; 
+        }
+
+        .logo { 
+            display: flex; align-items: center; gap: 0.8rem; text-decoration: none; color: var(--charcoal);
+            font-family: 'Playfair Display', serif; font-weight: 700; font-size: clamp(1.1rem, 2vw, 1.4rem);
+        }
+
+        .logo-img { height: clamp(30px, 7vh, 70px); width: auto; display: block; }
+
+        .nav-links { display: flex; align-items: center; }
+        .nav-links a { 
+            margin-left: 2vw; text-decoration: none; color: var(--charcoal); 
+            font-size: clamp(0.7rem, 1vw, 0.85rem); font-weight: 600; 
+            text-transform: uppercase; letter-spacing: 1.5px; transition: 0.3s ease;
+        }
+        .nav-links a:hover { color: var(--gold); }
+
+        #menu-toggle { display: none; }
+        .menu-icon { display: none; cursor: pointer; font-weight: 700; font-size: 0.8rem; letter-spacing: 2px; color: var(--charcoal); text-transform: uppercase; border: 1px solid var(--border); padding: 5px 10px; transition: 0.3s; }
+        .menu-icon:hover { background: var(--charcoal); color: white; }
+
+        @media (max-width: 768px) {
+            .menu-icon { display: block; }
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: white;
+                flex-direction: column;
+                padding: 1rem 0;
+                border-bottom: 1px solid var(--border);
+            }
+            .nav-links a, .translate-wrapper { margin: 15px 5vw; font-size: 0.9rem; text-align: left; }
+            #menu-toggle:checked ~ .nav-links { display: flex; }
+        }
+
+        header { padding: clamp(1rem, 5vh, 2rem) 5vw clamp(2rem, 8vh, 4rem); text-align: center; background: white; }
+        .hero-logo { width: clamp(125px, 35vw, 400px); height: auto; margin-top: -1rem; margin-bottom: -1rem; filter: drop-shadow(0px 10px 20px rgba(0,0,0,0.08)); transition: transform 0.5s cubic-bezier(0.165, 0.84, 0.44, 1), filter 0.5s ease; }
+        .hero-logo:hover { transform: scale(1.04); filter: drop-shadow(0px 15px 30px rgba(0,0,0,0.12)); }
+        header p.pre-title { font-size: clamp(0.7rem, 1vw, 0.8rem); color: var(--gold); text-transform: uppercase; letter-spacing: 0.4rem; font-weight: 700; margin-bottom: 1.5rem; }
+        header h1 { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 6vw, 4.2rem); margin: 0 auto 1.5rem; max-width: 90vw; line-height: 1.1; }
+        header p.description { font-size: clamp(0.9rem, 1.5vw, 1.1rem); color: var(--muted); max-width: 40rem; margin: 0 auto 3rem; font-weight: 300; }
+        .cta-button { display: inline-block; background: var(--charcoal); color: white; padding: 1.2rem 3rem; text-decoration: none; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; font-size: clamp(0.7rem, 1vw, 0.85rem); transition: all 0.3s ease; border: none; cursor: pointer; }
+        .cta-button:hover { background: var(--gold); transform: translateY(-3px); box-shadow: 0 8px 20px rgba(197, 160, 89, 0.3); }
+
+        .tool-section { background: white; padding: clamp(3rem, 10vh, 6rem) 5vw; border-top: 1px solid var(--border); }
+        .module-container { max-width: 1200px; margin: auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: clamp(2rem, 8vw, 5rem); align-items: center; }
+        .tool-info h2 { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 4vw, 2.5rem); margin-top: 0; }
+        .order-card { background: var(--bg); padding: clamp(1.5rem, 5vw, 3rem); border: 1px solid var(--border); box-shadow: 1.2rem 1.2rem 0px rgba(197, 160, 89, 0.1); }
+        .order-card input { width: 100%; padding: 1rem; margin-bottom: 1.2rem; border: 1px solid var(--border); box-sizing: border-box; font-size: 1rem; background: white; transition: border 0.3s; }
+        .order-card input:focus { outline: none; border: 1px solid var(--gold); }
+
+        .feed-section { padding: clamp(3rem, 10vh, 6rem) 5vw; background: var(--bg); }
+        .feed-header { display: flex; justify-content: space-between; align-items: flex-end; max-width: 1200px; margin: 0 auto 3rem; border-bottom: 2px solid var(--charcoal); padding-bottom: 1rem; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 3rem; max-width: 1200px; margin: auto; }
+        .report-item { border-bottom: 1px solid var(--border); padding-bottom: 2rem; transition: transform 0.3s; }
+        .report-item:hover { transform: translateX(5px); }
+
+        footer { text-align: center; padding: 5rem 5vw; border-top: 1px solid var(--border); font-size: 0.75rem; color: var(--muted); text-transform: uppercase; letter-spacing: 2px; background: white; }
+    </style>
+</head>
+<body>
+
+    {% if msg %}
+    <div class="msg-box">✅ {{ msg }}</div>
+    {% endif %}
+
+    <nav>
+        <a href="/" class="logo">
+            <img src="/images/logo.png" alt="InfoTop Logo" class="logo-img">
+            <span>InfoTop</span>
+        </a>
+
+        <input type="checkbox" id="menu-toggle">
+        <label for="menu-toggle" class="menu-icon">Menu</label>
+
+        <div class="nav-links">
+            <a href="#tool">Analysis</a>
+            <a href="/services">Service</a>
+            <a href="#">Solution</a>
+            <a href="/engineering">Engineering</a>
+            <a href="/stories">Stories</a> <!-- UPDATED LINE -->
+            <a href="/about">About</a>
+            
+            <!-- UPDATED: GLOBE ICON LANGUAGE DROPDOWN -->
+            <div class="translate-wrapper">
+                <button class="translate-trigger" onclick="toggleLangMenu()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="2" y1="12" x2="22" y2="12"></line>
+                        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                    </svg>
+                    Language
+                </button>
+                <div class="lang-menu" id="langMenu">
+                    <a href="javascript:void(0)" onclick="changeLang('en')">English</a>
+                    <a href="javascript:void(0)" onclick="changeLang('es')">Español</a>
+                    <a href="javascript:void(0)" onclick="changeLang('zh-CN')">中文</a>
+                    <a href="javascript:void(0)" onclick="changeLang('fr')">Français</a>
+                    <a href="javascript:void(0)" onclick="changeLang('de')">Deutsch</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <header>
+        <img src="/images/logo.png" alt="InfoTop Seal" class="hero-logo">
+        <p class="pre-title">Strategic Domain for Global Investors</p>
+        <h1>AI-Driven Global Mobility: Smart, Secure, Seamless.</h1>
+        <p class="description">Unlock global freedom with AI: secure, compliant, and tailored solutions for your finances, assets, and relocation.</p>
+        <a href="#tool" class="cta-button">Execute Analysis</a>
+    </header>
+
+    <section class="tool-section" id="tool">
+        <div class="module-container">
+            <div class="tool-info">
+                <h2>Proprietary Extraction Engine</h2>
+                <p>Bypass the media noise. We pull directly from official 10-K and 10-Q filings for raw accuracy.</p>
+                <ul style="list-style: none; padding: 0; color: var(--muted);">
+                    <li style="margin-bottom: 1rem;">✔ Direct SEC Connection</li>
+                    <li style="margin-bottom: 1rem;">✔ Automated Growth Audits</li>
+                    <li style="margin-bottom: 1rem;">✔ Instant Email Dispatch</li>
+                </ul>
+            </div>
+            <div class="order-card">
+                <form action="/order-report" method="post">
+                    <input type="text" name="ticker" placeholder="TICKER (e.g. NVDA)" required>
+                    <input type="email" name="email" placeholder="EMAIL ADDRESS" required>
+                    <button type="submit" class="cta-button" style="width: 100%;">Execute Analysis</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <section class="feed-section">
+        <div class="feed-header">
+            <h2>The Archive</h2>
+            <div style="font-size: 0.8rem; font-weight: 700; color: var(--gold); text-transform: uppercase; letter-spacing: 2px;">Latest Insights</div>
+        </div>
+        <div class="grid">
+            {% if reports %}
+                {% for report in reports %}
+                <div class="report-item">
+                    <div style="color: var(--gold); font-weight: 700; font-size: 0.8rem; text-transform: uppercase;">{{ report.ticker }} | Growth: {{ report.growth_pct }}%</div>
+                    <div style="font-family: 'Playfair Display', serif; font-size: 1.5rem; margin: 0.5rem 0; font-weight: 700;">{{ report.sentiment }}</div>
+                    <p style="font-size: 0.95rem; color: var(--muted); line-height: 1.7;">{{ report.summary }}</p>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div style="grid-column: 1 / -1; text-align: center; color: var(--muted); padding: 3rem;">
+                    Archive is currently empty.
+                </div>
+            {% endif %}
+        </div>
+    </section>
+
+    <footer>
+        &copy; 2024 InfoTop. All Rights Reserved. Private & Confidential.
+    </footer>
+
+    <!-- Hidden Real Google Engine -->
+    <div id="google_translate_element"></div>
+
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en',
+                autoDisplay: false
+            }, 'google_translate_element');
+        }
+
+        function toggleLangMenu() {
+            document.getElementById('langMenu').classList.toggle('active');
+        }
+
+        function changeLang(langCode) {
+            document.cookie = "googtrans=/en/" + langCode + "; path=/";
+            location.reload();
+        }
+
+        // Updated for the Icon: 
+        // We use .closest to make sure clicking the icon doesn't close the menu
+        window.onclick = function(event) {
+            if (!event.target.closest('.translate-trigger')) {
+                var menu = document.getElementById('langMenu');
+                if (menu.classList.contains('active')) {
+                    menu.classList.remove('active');
+                }
+            }
+        }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+</body>
+</html>

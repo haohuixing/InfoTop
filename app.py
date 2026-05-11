@@ -46,6 +46,22 @@ def home(request: Request, msg: str = None):
         context={"reports": reports, "msg": msg, "base_url": BASE_URL}
     )
 
+@app.get("/services")
+def services_page(request: Request):
+    return templates.TemplateResponse(
+        request=request,
+        name="services.html",
+        context={"base_url": BASE_URL}
+    )
+
+@app.get("/engineering")
+def engineering_page(request: Request):
+    return templates.TemplateResponse(
+        request=request,
+        name="engineering.html",
+        context={"base_url": BASE_URL}
+    )
+
 @app.get("/stories")
 def stories_page(request: Request):
     # This query looks for a table named 'success_stories'
