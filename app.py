@@ -64,20 +64,10 @@ def engineering_page(request: Request):
 
 @app.get("/stories")
 def stories_page(request: Request):
-    # This query looks for a table named 'success_stories'
-    query = text("SELECT title, client_name, content, image_url FROM success_stories ORDER BY created_at DESC")
-    try:
-        with engine.connect() as conn:
-            result = conn.execute(query)
-            stories = [dict(row) for row in result.mappings()]
-    except Exception as e:
-        print(f"❌ DB Error: {e}")
-        stories = []
-
     return templates.TemplateResponse(
-        request=request,  # THIS MUST BE HERE
+        request=request,
         name="stories.html",
-        context={"stories": stories, "base_url": BASE_URL}
+        context={"base_url": BASE_URL}
     )
 
 @app.get("/about")
