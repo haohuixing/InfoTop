@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Success Stories | InfoTop</title>
+    <title>Case Archives | InfoTop</title>
     <link rel="icon" type="image/png" href="/images/logo.png">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     
     <style>
         :root {
@@ -14,6 +14,7 @@
             --charcoal: #1a1a1a;
             --muted: #666;
             --border: #e8e8e3;
+            --deep-green: #00472f;
             font-size: 16px; 
         }
 
@@ -22,168 +23,101 @@
             background: var(--bg); 
             color: var(--charcoal); 
             margin: 0; padding: 0; 
-            line-height: 1.6; 
+            line-height: 1.8; 
             overflow-x: hidden;
-            top: 0 !important; 
         }
 
-        /* --- 100% RELIABLE TRANSLATE UI --- */
-        .goog-te-banner-frame.skiptranslate, #goog-gt-tt, .goog-te-balloon-frame, .goog-te-gadget img {
-            display: none !important;
-        }
-        #google_translate_element { display: none; }
-        body { top: 0px !important; }
-
-        .translate-wrapper {
-            position: relative;
-            display: inline-block;
-            margin-left: 2vw;
-        }
-
-        .translate-trigger {
-            background: none;
-            border: none;
-            color: var(--charcoal);
-            font-family: 'Inter', sans-serif;
-            font-size: clamp(0.7rem, 1vw, 0.85rem);
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            cursor: pointer;
-            padding: 0;
-            transition: 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .translate-trigger svg { transition: 0.3s ease; }
-        .translate-trigger:hover { color: var(--gold); }
-        .translate-trigger:hover svg { stroke: var(--gold); }
-
-        .lang-menu {
-            position: absolute;
-            top: 100%;
-            right: 0;
-            background: white;
-            border: 1px solid var(--border);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            display: none; 
-            z-index: 2000;
-            min-width: 150px;
-            margin-top: 10px;
-        }
-
-        .lang-menu a {
-            display: block;
-            padding: 12px 20px;
-            color: var(--charcoal);
-            text-decoration: none;
-            font-size: 0.8rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            border-bottom: 1px solid var(--border);
-            transition: 0.2s;
-            margin: 0 !important;
-        }
-
-        .lang-menu a:last-child { border-bottom: none; }
-        .lang-menu a:hover { background: var(--bg); color: var(--gold); }
-        .lang-menu.active { display: block; }
-
-        /* --- NAVIGATION --- */
-        nav { 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            padding: 1rem 5vw; 
-            border-bottom: 1px solid var(--border); 
-            background: white; 
-            position: sticky; 
-            top: 0; 
-            z-index: 1000; 
-        }
-
-        .logo { 
-            display: flex; align-items: center; gap: 0.8rem; text-decoration: none; color: var(--charcoal);
-            font-family: 'Playfair Display', serif; font-weight: 700; font-size: clamp(1.1rem, 2vw, 1.4rem);
-        }
-
-        .logo-img { height: clamp(30px, 7vh, 70px); width: auto; display: block; }
-
-        .nav-links { display: flex; align-items: center; }
-        .nav-links a { 
-            margin-left: 2vw; text-decoration: none; color: var(--charcoal); 
-            font-size: clamp(0.7rem, 1vw, 0.85rem); font-weight: 600; 
-            text-transform: uppercase; letter-spacing: 1.5px; transition: 0.3s ease;
-        }
+        /* --- NAVIGATION (Matches your existing style) --- */
+        nav { display: flex; justify-content: space-between; align-items: center; padding: 1rem 5vw; border-bottom: 1px solid var(--border); background: white; position: sticky; top: 0; z-index: 1000; }
+        .logo { display: flex; align-items: center; gap: 0.8rem; text-decoration: none; color: var(--charcoal); font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1.4rem; }
+        .logo-img { height: 40px; width: auto; }
+        .nav-links a { margin-left: 2vw; text-decoration: none; color: var(--charcoal); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; transition: 0.3s; }
         .nav-links a:hover { color: var(--gold); }
 
-        /* --- MOBILE MENU LOGIC --- */
-        #menu-toggle { display: none; }
-        .menu-icon { display: none; cursor: pointer; font-weight: 700; font-size: 0.8rem; letter-spacing: 2px; color: var(--charcoal); text-transform: uppercase; border: 1px solid var(--border); padding: 5px 10px; transition: 0.3s; }
-        .menu-icon:hover { background: var(--charcoal); color: white; }
-
-        @media (max-width: 768px) {
-            .menu-icon { display: block; }
-            .nav-links {
-                display: none;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                width: 100%;
-                background: white;
-                flex-direction: column;
-                padding: 1rem 0;
-                border-bottom: 1px solid var(--border);
-            }
-            .nav-links a, .translate-wrapper { margin: 15px 5vw; font-size: 0.9rem; text-align: left; }
-            #menu-toggle:checked ~ .nav-links { display: flex; }
-        }
-
-        /* --- CONTENT STYLING --- */
-        header { padding: clamp(1rem, 5vh, 2rem) 5vw 4rem; text-align: center; background: white; border-bottom: 1px solid var(--border); }
-        header h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.5rem, 5vw, 4rem); margin: 0; }
-        header p.pre-title { color: var(--gold); text-transform: uppercase; letter-spacing: 5px; font-weight: 700; font-size: 0.8rem; margin-bottom: 1rem; }
-
-        .container { max-width: 1000px; margin: 4rem auto; padding: 0 5vw; }
-        
-        .story-card { 
-            display: grid; 
-            grid-template-columns: 300px 1fr; 
-            gap: 3rem; 
-            margin-bottom: 5rem; 
-            align-items: start;
-        }
-
-        .story-image-wrap {
-            border: 1px solid var(--border);
-            padding: 10px;
+        /* --- ARCHIVE HEADER --- */
+        .archive-header {
+            padding: 8rem 5vw 4rem;
+            text-align: center;
             background: white;
-            box-shadow: 10px 10px 0px rgba(197, 160, 89, 0.1);
+            border-bottom: 1px solid var(--border);
+        }
+        .archive-header p.pre-title { color: var(--gold); text-transform: uppercase; letter-spacing: 5px; font-weight: 700; font-size: 0.8rem; margin-bottom: 1rem; }
+        .archive-header h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.5rem, 6vw, 4.5rem); margin: 0; line-height: 1.1; }
+
+        /* --- CASE STUDY GRID --- */
+        .case-container { max-width: 1200px; margin: 0 auto; padding: 6rem 5vw; }
+
+        .case-entry {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            margin-bottom: 10rem;
+            align-items: center;
         }
 
-        .story-image { 
-            width: 100%; 
-            aspect-ratio: 1/1;
-            object-fit: cover; 
+        .case-entry:nth-child(even) { direction: rtl; }
+        .case-entry:nth-child(even) .case-text { direction: ltr; }
+
+        .case-image-wrap {
+            position: relative;
+            background: white;
+            padding: 15px;
+            border: 1px solid var(--border);
+            box-shadow: 20px 20px 0px rgba(197, 160, 89, 0.05);
+        }
+
+        .case-image {
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
             filter: grayscale(100%);
-            transition: 0.5s ease;
+            transition: 1s ease;
             display: block;
         }
 
-        .story-card:hover .story-image { filter: grayscale(0%); }
+        .case-entry:hover .case-image { filter: grayscale(0%); }
 
-        .story-meta { color: var(--gold); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 0.5rem; }
-        .story-title { font-family: 'Playfair Display', serif; font-size: 2.2rem; margin: 0.5rem 0 1.5rem; line-height: 1.2; }
-        .story-content { color: var(--muted); font-size: 1.1rem; font-weight: 300; line-height: 1.8; }
+        .case-category {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--gold);
+            margin-bottom: 1rem;
+            display: block;
+        }
 
-        footer { text-align: center; padding: 5rem 5vw; border-top: 1px solid var(--border); font-size: 0.75rem; color: var(--muted); text-transform: uppercase; letter-spacing: 2px; background: white; }
+        .case-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            margin: 0.5rem 0 2rem;
+            line-height: 1.2;
+        }
 
-        @media (max-width: 768px) {
-            .story-card { grid-template-columns: 1fr; gap: 2rem; }
-            .story-title { font-size: 1.8rem; }
+        .case-description {
+            font-size: 1.1rem;
+            color: var(--muted);
+            font-weight: 300;
+            margin-bottom: 2rem;
+        }
+
+        .case-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            border-top: 1px solid var(--border);
+            padding-top: 2rem;
+        }
+
+        .stat-item h4 { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; margin: 0; color: var(--charcoal); }
+        .stat-item p { font-size: 1.2rem; font-family: 'Playfair Display', serif; margin: 0.2rem 0; color: var(--deep-green); font-weight: 700; }
+
+        /* --- FOOTER --- */
+        footer { text-align: center; padding: 5rem 5vw; border-top: 1px solid var(--border); font-size: 0.75rem; color: var(--muted); text-transform: uppercase; letter-spacing: 2px; }
+
+        @media (max-width: 900px) {
+            .case-entry, .case-entry:nth-child(even) { grid-template-columns: 1fr; gap: 3rem; direction: ltr; }
+            .case-image { height: 350px; }
         }
     </style>
 </head>
@@ -194,98 +128,99 @@
             <img src="/images/logo.png" alt="InfoTop Logo" class="logo-img">
             <span>InfoTop</span>
         </a>
-
-        <input type="checkbox" id="menu-toggle">
-        <label for="menu-toggle" class="menu-icon">Menu</label>
-
         <div class="nav-links">
             <a href="/#tool">Analysis</a>
             <a href="/services">Service</a>
-            <a href="#">Solution</a>
             <a href="/engineering">Engineering</a>
             <a href="/stories" style="color: var(--gold);">Stories</a>
             <a href="/about">About</a>
-            
-            <div class="translate-wrapper">
-                <button class="translate-trigger" onclick="toggleLangMenu()">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="12" cy="12" r="10"></circle>
-                        <line x1="2" y1="12" x2="22" y2="12"></line>
-                        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
-                    </svg>
-                    Language
-                </button>
-                <div class="lang-menu" id="langMenu">
-                    <a href="javascript:void(0)" onclick="changeLang('en')">English</a>
-                    <a href="javascript:void(0)" onclick="changeLang('es')">Español</a>
-                    <a href="javascript:void(0)" onclick="changeLang('zh-CN')">中文</a>
-                    <a href="javascript:void(0)" onclick="changeLang('fr')">Français</a>
-                    <a href="javascript:void(0)" onclick="changeLang('de')">Deutsch</a>
-                </div>
-            </div>
         </div>
     </nav>
 
-    <header>
-        <p class="pre-title">Global Intelligence Success</p>
-        <h1>Case Archives</h1>
+    <header class="archive-header">
+        <p class="pre-title">Strategic Execution</p>
+        <h1>Success Archives.</h1>
     </header>
 
-    <div class="container">
-        {% if stories %}
-            {% for story in stories %}
-            <article class="story-card">
-                <div class="story-image-wrap">
-                    <img src="{{ story.image_url }}" alt="Success Story" class="story-image">
-                </div>
-                <div class="story-body">
-                    <div class="story-meta">Client: {{ story.client_name }}</div>
-                    <h2 class="story-title">{{ story.title }}</h2>
-                    <p class="story-content">{{ story.content }}</p>
-                </div>
-            </article>
-            {% endfor %}
-        {% else %}
-            <div style="text-align: center; padding: 5rem; color: var(--muted);">
-                Archive is currently being decrypted.
+    <div class="case-container">
+        
+        <!-- CASE 01 -->
+        <article class="case-entry">
+            <div class="case-image-wrap">
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?q=80&w=1200&auto=format&fit=crop" class="case-image" alt="Wealth Migration">
             </div>
-        {% endif %}
+            <div class="case-text">
+                <span class="case-category">Capital Migration</span>
+                <h2 class="case-title">The Miller Group Residency Transition</h2>
+                <p class="case-description">
+                    Leveraged InfoTop's proprietary extraction engine to identify high-growth, low-tax jurisdictions. We facilitated the secure movement of $42M in liquid assets while coordinating a seamless transition to a Tier-1 residency-by-investment program.
+                </p>
+                <div class="case-stats">
+                    <div class="stat-item">
+                        <h4>Tax Efficiency</h4>
+                        <p>+34% Improvement</p>
+                    </div>
+                    <div class="stat-item">
+                        <h4>Deployment Time</h4>
+                        <p>82 Days</p>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <!-- CASE 02 -->
+        <article class="case-entry">
+            <div class="case-image-wrap">
+                <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1200&auto=format&fit=crop" class="case-image" alt="Corporate Sovereignty">
+            </div>
+            <div class="case-text">
+                <span class="case-category">Corporate Sovereignty</span>
+                <h2 class="case-title">Offshore Infrastructure for Tech-Alpha</h2>
+                <p class="case-description">
+                    Architected a multi-jurisdictional corporate structure for a leading AI research firm. By implementing automated global fund flows and secure identity management, we insulated their intellectual property from domestic regulatory volatility.
+                </p>
+                <div class="case-stats">
+                    <div class="stat-item">
+                        <h4>Operational Freedom</h4>
+                        <p>100% Unrestricted</p>
+                    </div>
+                    <div class="stat-item">
+                        <h4>Compliance Rating</h4>
+                        <p>Grade-A Secure</p>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <!-- CASE 03 -->
+        <article class="case-entry">
+            <div class="case-image-wrap">
+                <img src="https://images.unsplash.com/photo-1454165833767-02a698d1316a?q=80&w=1200&auto=format&fit=crop" class="case-image" alt="Asset Allocation">
+            </div>
+            <div class="case-text">
+                <span class="case-category">AI Engineering</span>
+                <h2 class="case-title">Autonomous Compliance Deployment</h2>
+                <p class="case-description">
+                    Deployed a custom "Digital Brain" for a family office managing diversified global assets. The AI agents monitor cross-border tax compliance in real-time, reducing reliance on traditional legal consultancies by 60%.
+                </p>
+                <div class="case-stats">
+                    <div class="stat-item">
+                        <h4>Overhead Reduction</h4>
+                        <p>$240k / Annum</p>
+                    </div>
+                    <div class="stat-item">
+                        <h4>Audit Accuracy</h4>
+                        <p>99.9% Automated</p>
+                    </div>
+                </div>
+            </div>
+        </article>
+
     </div>
 
     <footer>
         &copy; 2024 InfoTop. All Rights Reserved. Private & Confidential.
     </footer>
-
-    <!-- Google Translate Engine -->
-    <div id="google_translate_element"></div>
-
-    <script type="text/javascript">
-        function googleTranslateElementInit() {
-            new google.translate.TranslateElement({
-                pageLanguage: 'en',
-                autoDisplay: false
-            }, 'google_translate_element');
-        }
-
-        function toggleLangMenu() {
-            document.getElementById('langMenu').classList.toggle('active');
-        }
-
-        function changeLang(langCode) {
-            document.cookie = "googtrans=/en/" + langCode + "; path=/";
-            location.reload();
-        }
-
-        window.onclick = function(event) {
-            if (!event.target.closest('.translate-trigger')) {
-                var menu = document.getElementById('langMenu');
-                if (menu && menu.classList.contains('active')) {
-                    menu.classList.remove('active');
-                }
-            }
-        }
-    </script>
-    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
 </body>
 </html>
