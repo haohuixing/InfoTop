@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global Mobility Analysis | InfoTop</title>
+    <link rel="icon" type="image/png" href="/images/logo.png">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg: #fdfdfc;
+            --gold: #c5a059;
+            --charcoal: #1a1a1a;
+            --muted: #666;
+            --border: #e8e8e3;
+            --nomad-green: #00472f;
+            font-size: 16px; 
+        }
+
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--charcoal); margin: 0; padding: 0; line-height: 1.6; overflow-x: hidden; }
+
+        /* --- NAVIGATION --- */
+        nav { display: flex; justify-content: space-between; align-items: center; padding: 1rem 5vw; border-bottom: 1px solid var(--border); background: white; position: sticky; top: 0; z-index: 1000; }
+        .logo { display: flex; align-items: center; gap: 0.8rem; text-decoration: none; color: var(--charcoal); font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1.4rem; }
+        .logo-img { height: 40px; width: auto; }
+        .nav-links a { margin-left: 2vw; text-decoration: none; color: var(--charcoal); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; }
+
+        /* --- MULTI-STEP FORM STYLING --- */
+        .form-hero { padding: 6rem 5vw 3rem; text-align: center; }
+        .form-hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 5vw, 3.5rem); margin: 0; }
+        .form-hero p { color: var(--gold); text-transform: uppercase; letter-spacing: 4px; font-weight: 700; font-size: 0.8rem; margin-bottom: 1rem; }
+
+        .analysis-container { max-width: 800px; margin: 0 auto 10rem; padding: 0 5vw; }
+        
+        /* Progress Bar */
+        .progress-bar { display: flex; justify-content: space-between; margin-bottom: 4rem; position: relative; }
+        .progress-bar::before { content: ''; position: absolute; top: 50%; left: 0; right: 0; height: 1px; background: var(--border); z-index: 1; }
+        .step-dot { width: 40px; height: 40px; background: white; border: 1px solid var(--border); border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 2; font-size: 0.8rem; font-weight: 700; transition: 0.3s; color: var(--muted); }
+        .step-dot.active { border-color: var(--gold); color: var(--gold); box-shadow: 0 0 15px rgba(197,160,89,0.2); }
+        .step-dot.completed { background: var(--gold); border-color: var(--gold); color: white; }
+
+        .form-step { display: none; background: white; border: 1px solid var(--border); padding: clamp(2rem, 8vw, 4rem); box-shadow: 20px 20px 0px rgba(0,0,0,0.02); }
+        .form-step.active { display: block; animation: fadeIn 0.5s ease; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        h2.step-title { font-family: 'Playfair Display', serif; font-size: 1.8rem; margin: 0 0 2rem; border-left: 4px solid var(--gold); padding-left: 1.5rem; }
+
+        .input-group { margin-bottom: 2rem; }
+        label { display: block; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); margin-bottom: 0.8rem; }
+        input[type="text"], input[type="email"], select, textarea {
+            width: 100%; padding: 1.2rem; border: 1px solid var(--border); background: var(--bg); font-family: 'Inter', sans-serif; font-size: 1rem; box-sizing: border-box; transition: 0.3s;
+        }
+        input:focus { outline: none; border-color: var(--gold); background: white; }
+
+        /* Custom Checkbox Grid */
+        .checkbox-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem; }
+        .check-item { 
+            display: flex; align-items: center; gap: 10px; padding: 1rem; border: 1px solid var(--border); cursor: pointer; transition: 0.3s; font-size: 0.9rem;
+        }
+        .check-item:hover { border-color: var(--gold); }
+        .check-item input { display: none; }
+        .check-item.selected { background: var(--nomad-green); color: white; border-color: var(--nomad-green); }
+
+        .btn-wrap { display: flex; justify-content: space-between; margin-top: 3rem; }
+        .btn { padding: 1.2rem 3rem; border: none; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; font-size: 0.8rem; cursor: pointer; transition: 0.3s; }
+        .btn-next { background: var(--charcoal); color: white; }
+        .btn-next:hover { background: var(--gold); }
+        .btn-prev { background: transparent; color: var(--muted); text-decoration: underline; }
+
+        footer { text-align: center; padding: 5rem 5vw; border-top: 1px solid var(--border); font-size: 0.75rem; color: var(--muted); text-transform: uppercase; letter-spacing: 2px; }
+
+        @media (max-width: 600px) {
+            .checkbox-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="/" class="logo">
+            <img src="/images/logo.png" alt="InfoTop Logo" class="logo-img">
+            <span>InfoTop</span>
+        </a>
+        <div class="nav-links">
+            <a href="/analysis" style="color: var(--gold);">Analysis</a>
+            <a href="/services">Service</a>
+            <a href="/engineering">Engineering</a>
+            <a href="/stories">Stories</a>
+            <a href="/about">About</a>
+        </div>
+    </nav>
+
+    <header class="form-hero">
+        <p>Strategic Intelligence Onboarding</p>
+        <h1>Custom Mobility Plan</h1>
+    </header>
+
+    <div class="analysis-container">
+        
+        <div class="progress-bar">
+            <div class="step-dot active" id="dot-1">1</div>
+            <div class="step-dot" id="dot-2">2</div>
+            <div class="step-dot" id="dot-3">3</div>
+            <div class="step-dot" id="dot-4">4</div>
+        </div>
+
+        <form id="mobilityForm" action="/submit-mobility-plan" method="POST">
+            
+            <!-- STEP 1: CLIENT INFORMATION -->
+            <div class="form-step active" id="step-1">
+                <h2 class="step-title">Identity & Origins</h2>
+                <div class="input-group">
+                    <label>Full Name / Company Name</label>
+                    <input type="text" name="client_name" placeholder="E.g. John Doe / Global Alpha Corp" required>
+                </div>
+                <div class="input-group">
+                    <label>Nationality / Country of Residence</label>
+                    <input type="text" name="nationality" placeholder="E.g. Canadian" required>
+                </div>
+                <div class="input-group">
+                    <label>Current Location (City, Country)</label>
+                    <input type="text" name="current_location" placeholder="E.g. Toronto, Canada" required>
+                </div>
+                <div class="input-group">
+                    <label>Target Destination(s)</label>
+                    <input type="text" name="target_destination" placeholder="E.g. Panama, UAE, Uruguay" required>
+                </div>
+                <div class="btn-wrap" style="justify-content: flex-end;">
+                    <button type="button" class="btn btn-next" onclick="nextStep(2)">Next Step</button>
+                </div>
+            </div>
+
+            <!-- STEP 2: MOBILITY GOALS -->
+            <div class="form-step" id="step-2">
+                <h2 class="step-title">Mobility Goals</h2>
+                <label>Purpose of Relocation / Mobility</label>
+                <div class="checkbox-grid">
+                    <label class="check-item"><input type="checkbox" name="purpose" value="Personal"> Personal / Family</label>
+                    <label class="check-item"><input type="checkbox" name="purpose" value="Business"> Business / Work</label>
+                    <label class="check-item"><input type="checkbox" name="purpose" value="Investment"> Investment / Asset Management</label>
+                    <label class="check-item"><input type="checkbox" name="purpose" value="Other"> Other</label>
+                </div>
+
+                <div class="input-group" style="margin-top: 2rem;">
+                    <label>If Other, please specify:</label>
+                    <input type="text" name="purpose_other">
+                </div>
+
+                <div class="btn-wrap">
+                    <button type="button" class="btn btn-prev" onclick="prevStep(1)">Back</button>
+                    <button type="button" class="btn btn-next" onclick="nextStep(3)">Next Step</button>
+                </div>
+            </div>
+
+            <!-- STEP 3: PREFERRED SERVICES -->
+            <div class="form-step" id="step-3">
+                <h2 class="step-title">Strategic Requirements</h2>
+                <label>Preferred Services (Select all that apply)</label>
+                <div class="checkbox-grid">
+                    <label class="check-item"><input type="checkbox" name="services" value="Providers"> Service Provider Access</label>
+                    <label class="check-item"><input type="checkbox" name="services" value="Finance"> Financial Flows</label>
+                    <label class="check-item"><input type="checkbox" name="services" value="Identity"> Identity / Visa Assistance</label>
+                    <label class="check-item"><input type="checkbox" name="services" value="Assets"> Asset Allocation</label>
+                    <label class="check-item"><input type="checkbox" name="services" value="Tax"> Tax Optimization</label>
+                    <label class="check-item"><input type="checkbox" name="services" value="Relocation"> Physical Relocation</label>
+                </div>
+
+                <div class="btn-wrap">
+                    <button type="button" class="btn btn-prev" onclick="prevStep(2)">Back</button>
+                    <button type="button" class="btn btn-next" onclick="nextStep(4)">Next Step</button>
+                </div>
+            </div>
+
+            <!-- STEP 4: CONSTRAINTS & NOTES -->
+            <div class="form-step" id="step-4">
+                <h2 class="step-title">Parameters & Timeline</h2>
+                <div class="input-group">
+                    <label>Budget Range (Optional)</label>
+                    <input type="text" name="budget" placeholder="E.g. $50k - $100k USD">
+                </div>
+                <div class="input-group">
+                    <label>Timeline / Desired Relocation Date</label>
+                    <input type="text" name="timeline" placeholder="E.g. Q3 2024">
+                </div>
+                <div class="input-group">
+                    <label>Special Requirements / Notes</label>
+                    <textarea name="notes" rows="4" placeholder="Any specific concerns or unique constraints?"></textarea>
+                </div>
+
+                <div class="btn-wrap">
+                    <button type="button" class="btn btn-prev" onclick="prevStep(3)">Back</button>
+                    <button type="submit" class="btn btn-next" style="background: var(--nomad-green);">Submit Briefing</button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+    <footer>
+        &copy; 2024 InfoTop. All Rights Reserved. Private & Confidential.
+    </footer>
+
+    <script>
+        // Multi-step Logic
+        function nextStep(step) {
+            document.querySelectorAll('.form-step').forEach(s => s.classList.remove('active'));
+            document.getElementById('step-' + step).classList.add('active');
+            
+            document.getElementById('dot-' + (step-1)).classList.add('completed');
+            document.getElementById('dot-' + step).classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        function prevStep(step) {
+            document.querySelectorAll('.form-step').forEach(s => s.classList.remove('active'));
+            document.getElementById('step-' + step).classList.add('active');
+            
+            document.getElementById('dot-' + (step+1)).classList.remove('active');
+            document.getElementById('dot-' + step).classList.remove('completed');
+            document.getElementById('dot-' + step).classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        // Toggle visual selected state for check-items
+        document.querySelectorAll('.check-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const cb = this.querySelector('input');
+                cb.checked = !cb.checked;
+                this.classList.toggle('selected', cb.checked);
+            });
+        });
+    </script>
+
+</body>
+</html>
