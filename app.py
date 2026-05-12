@@ -80,6 +80,21 @@ def about_page(request: Request):
         context={"base_url": BASE_URL}
     )
 
+@app.get("/analysis")
+def analysis_page(request: Request):
+    return templates.TemplateResponse(
+        request=request,
+        name="analysis.html",
+        context={"base_url": BASE_URL}
+    )
+
+@app.post("/submit-mobility-plan")
+async def submit_plan(request: Request):
+    # For now, we just capture the form and redirect
+    form_data = await request.form()
+    print(f"📥 Received Mobility Plan: {form_data}")
+    return RedirectResponse(url="/analysis?status=success", status_code=303)
+
 @app.post("/order-report")
 def order_report(ticker: str = Form(...), email: str = Form(...)):
     query = text("INSERT INTO report_requests (ticker, user_email, status) VALUES (:t, :e, 'pending')")
