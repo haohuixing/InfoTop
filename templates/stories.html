@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Case Archives | InfoTop</title>
+    <title>Global Success Stories | InfoTop</title>
     <link rel="icon" type="image/png" href="/images/logo.png">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     
@@ -14,7 +14,7 @@
             --charcoal: #1a1a1a;
             --muted: #666;
             --border: #e8e8e3;
-            --deep-green: #00472f;
+            --nomad-green: #00472f;
             font-size: 16px; 
         }
 
@@ -23,101 +23,196 @@
             background: var(--bg); 
             color: var(--charcoal); 
             margin: 0; padding: 0; 
-            line-height: 1.8; 
+            line-height: 1.7; 
             overflow-x: hidden;
+            top: 0 !important; 
         }
 
-        /* --- NAVIGATION (Matches your existing style) --- */
-        nav { display: flex; justify-content: space-between; align-items: center; padding: 1rem 5vw; border-bottom: 1px solid var(--border); background: white; position: sticky; top: 0; z-index: 1000; }
-        .logo { display: flex; align-items: center; gap: 0.8rem; text-decoration: none; color: var(--charcoal); font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1.4rem; }
-        .logo-img { height: 40px; width: auto; }
-        .nav-links a { margin-left: 2vw; text-decoration: none; color: var(--charcoal); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; transition: 0.3s; }
+        /* --- TRANSLATE UI (Matches Homepage) --- */
+        .goog-te-banner-frame.skiptranslate, #goog-gt-tt, .goog-te-balloon-frame, .goog-te-gadget img {
+            display: none !important;
+        }
+        #google_translate_element { display: none; }
+        body { top: 0px !important; }
+
+        .translate-wrapper {
+            position: relative;
+            display: inline-block;
+            margin-left: 2vw;
+        }
+
+        .translate-trigger {
+            background: none;
+            border: none;
+            color: var(--charcoal);
+            font-family: 'Inter', sans-serif;
+            font-size: clamp(0.7rem, 1vw, 0.85rem);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            cursor: pointer;
+            padding: 0;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .translate-trigger svg { transition: 0.3s ease; }
+        .translate-trigger:hover { color: var(--gold); }
+        .translate-trigger:hover svg { stroke: var(--gold); }
+
+        .lang-menu {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            border: 1px solid var(--border);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            display: none; 
+            z-index: 2000;
+            min-width: 150px;
+            margin-top: 10px;
+        }
+
+        .lang-menu a {
+            display: block;
+            padding: 12px 20px;
+            color: var(--charcoal);
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 1px solid var(--border);
+            transition: 0.2s;
+            margin: 0 !important;
+        }
+
+        .lang-menu a:last-child { border-bottom: none; }
+        .lang-menu a:hover { background: var(--bg); color: var(--gold); }
+        .lang-menu.active { display: block; }
+
+        /* --- NAVIGATION --- */
+        nav { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            padding: 1rem 5vw; 
+            border-bottom: 1px solid var(--border); 
+            background: white; 
+            position: sticky; 
+            top: 0; 
+            z-index: 1000; 
+        }
+
+        .logo { 
+            display: flex; align-items: center; gap: 0.8rem; text-decoration: none; color: var(--charcoal);
+            font-family: 'Playfair Display', serif; font-weight: 700; font-size: clamp(1.1rem, 2vw, 1.4rem);
+        }
+
+        .logo-img { height: clamp(30px, 7vh, 70px); width: auto; display: block; }
+
+        .nav-links { display: flex; align-items: center; }
+        .nav-links a { 
+            margin-left: 2vw; text-decoration: none; color: var(--charcoal); 
+            font-size: clamp(0.7rem, 1vw, 0.85rem); font-weight: 600; 
+            text-transform: uppercase; letter-spacing: 1.5px; transition: 0.3s ease;
+        }
         .nav-links a:hover { color: var(--gold); }
 
-        /* --- ARCHIVE HEADER --- */
-        .archive-header {
-            padding: 8rem 5vw 4rem;
-            text-align: center;
-            background: white;
-            border-bottom: 1px solid var(--border);
+        #menu-toggle { display: none; }
+        .menu-icon { display: none; cursor: pointer; font-weight: 700; font-size: 0.8rem; letter-spacing: 2px; color: var(--charcoal); text-transform: uppercase; border: 1px solid var(--border); padding: 5px 10px; transition: 0.3s; }
+        .menu-icon:hover { background: var(--charcoal); color: white; }
+
+        @media (max-width: 768px) {
+            .menu-icon { display: block; }
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: white;
+                flex-direction: column;
+                padding: 1rem 0;
+                border-bottom: 1px solid var(--border);
+            }
+            .nav-links a, .translate-wrapper { margin: 15px 5vw; font-size: 0.9rem; text-align: left; }
+            #menu-toggle:checked ~ .nav-links { display: flex; }
         }
-        .archive-header p.pre-title { color: var(--gold); text-transform: uppercase; letter-spacing: 5px; font-weight: 700; font-size: 0.8rem; margin-bottom: 1rem; }
-        .archive-header h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.5rem, 6vw, 4.5rem); margin: 0; line-height: 1.1; }
 
-        /* --- CASE STUDY GRID --- */
-        .case-container { max-width: 1200px; margin: 0 auto; padding: 6rem 5vw; }
+        /* --- CONTENT STYLING --- */
+        header { padding: 8rem 5vw 4rem; text-align: center; background: white; border-bottom: 1px solid var(--border); }
+        header p.pre-title { color: var(--gold); text-transform: uppercase; letter-spacing: 5px; font-weight: 700; font-size: 0.8rem; margin-bottom: 1rem; }
+        header h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.5rem, 6vw, 4rem); margin: 0; }
 
-        .case-entry {
+        .story-container { max-width: 1100px; margin: 0 auto; padding: 6rem 5vw; }
+
+        .case-dossier {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 5rem;
-            margin-bottom: 10rem;
-            align-items: center;
+            gap: 4rem;
+            margin-bottom: 12rem;
+            align-items: start;
         }
 
-        .case-entry:nth-child(even) { direction: rtl; }
-        .case-entry:nth-child(even) .case-text { direction: ltr; }
+        .case-dossier:nth-child(even) { direction: rtl; }
+        .case-dossier:nth-child(even) .case-content { direction: ltr; }
 
-        .case-image-wrap {
+        .case-visual {
             position: relative;
             background: white;
-            padding: 15px;
+            padding: 12px;
             border: 1px solid var(--border);
-            box-shadow: 20px 20px 0px rgba(197, 160, 89, 0.05);
+            box-shadow: 15px 15px 0px rgba(197, 160, 89, 0.05);
         }
 
-        .case-image {
+        .case-visual img {
             width: 100%;
-            height: 500px;
+            height: 450px;
             object-fit: cover;
             filter: grayscale(100%);
-            transition: 1s ease;
+            transition: 0.8s ease;
             display: block;
         }
 
-        .case-entry:hover .case-image { filter: grayscale(0%); }
+        .case-dossier:hover .case-visual img { filter: grayscale(0%); }
 
-        .case-category {
-            font-size: 0.75rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            color: var(--gold);
-            margin-bottom: 1rem;
-            display: block;
+        .meta-label { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--gold); display: block; margin-bottom: 0.5rem; }
+        .case-client { font-family: 'Playfair Display', serif; font-size: 1.8rem; margin: 0 0 1.5rem; }
+        
+        .section-title { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--charcoal); margin-top: 2rem; border-bottom: 1px solid var(--border); padding-bottom: 5px; margin-bottom: 10px; }
+        
+        .challenge-box { font-size: 0.95rem; color: var(--muted); font-weight: 300; margin-bottom: 2rem; }
+        
+        .solution-list { list-style: none; padding: 0; margin: 0; }
+        .solution-list li { font-size: 0.9rem; margin-bottom: 0.8rem; padding-left: 1.5rem; position: relative; }
+        .solution-list li::before { content: "•"; color: var(--gold); position: absolute; left: 0; font-weight: bold; }
+
+        .outcome-banner {
+            margin-top: 2.5rem;
+            background: var(--nomad-green);
+            color: white;
+            padding: 1.5rem;
+            font-size: 0.9rem;
         }
+        .outcome-banner strong { color: var(--gold); display: block; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; }
 
-        .case-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.5rem;
-            margin: 0.5rem 0 2rem;
-            line-height: 1.2;
-        }
-
-        .case-description {
-            font-size: 1.1rem;
-            color: var(--muted);
+        .testimonial {
+            margin-top: 2rem;
+            font-style: italic;
+            color: var(--charcoal);
+            border-left: 3px solid var(--gold);
+            padding-left: 1.5rem;
             font-weight: 300;
-            margin-bottom: 2rem;
         }
 
-        .case-stats {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            border-top: 1px solid var(--border);
-            padding-top: 2rem;
-        }
-
-        .stat-item h4 { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; margin: 0; color: var(--charcoal); }
-        .stat-item p { font-size: 1.2rem; font-family: 'Playfair Display', serif; margin: 0.2rem 0; color: var(--deep-green); font-weight: 700; }
-
-        /* --- FOOTER --- */
         footer { text-align: center; padding: 5rem 5vw; border-top: 1px solid var(--border); font-size: 0.75rem; color: var(--muted); text-transform: uppercase; letter-spacing: 2px; }
 
-        @media (max-width: 900px) {
-            .case-entry, .case-entry:nth-child(even) { grid-template-columns: 1fr; gap: 3rem; direction: ltr; }
-            .case-image { height: 350px; }
+        @media (max-width: 850px) {
+            .case-dossier, .case-dossier:nth-child(even) { grid-template-columns: 1fr; direction: ltr; gap: 2rem; margin-bottom: 8rem; }
+            .case-visual img { height: 300px; }
         }
     </style>
 </head>
@@ -128,99 +223,151 @@
             <img src="/images/logo.png" alt="InfoTop Logo" class="logo-img">
             <span>InfoTop</span>
         </a>
+
+        <input type="checkbox" id="menu-toggle">
+        <label for="menu-toggle" class="menu-icon">Menu</label>
+
         <div class="nav-links">
             <a href="/#tool">Analysis</a>
             <a href="/services">Service</a>
             <a href="/engineering">Engineering</a>
             <a href="/stories" style="color: var(--gold);">Stories</a>
             <a href="/about">About</a>
+
+            <!-- GLOBE ICON LANGUAGE DROPDOWN -->
+            <div class="translate-wrapper">
+                <button class="translate-trigger" onclick="toggleLangMenu()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="2" y1="12" x2="22" y2="12"></line>
+                        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                    </svg>
+                    Language
+                </button>
+                <div class="lang-menu" id="langMenu">
+                    <a href="javascript:void(0)" onclick="changeLang('en')">English</a>
+                    <a href="javascript:void(0)" onclick="changeLang('es')">Español</a>
+                    <a href="javascript:void(0)" onclick="changeLang('zh-CN')">中文</a>
+                    <a href="javascript:void(0)" onclick="changeLang('fr')">Français</a>
+                    <a href="javascript:void(0)" onclick="changeLang('de')">Deutsch</a>
+                </div>
+            </div>
         </div>
     </nav>
 
-    <header class="archive-header">
-        <p class="pre-title">Strategic Execution</p>
-        <h1>Success Archives.</h1>
+    <header>
+        <p class="pre-title">Proven Global Strategies</p>
+        <h1>Global Success Stories</h1>
     </header>
 
-    <div class="case-container">
-        
-        <!-- CASE 01 -->
-        <article class="case-entry">
-            <div class="case-image-wrap">
-                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?q=80&w=1200&auto=format&fit=crop" class="case-image" alt="Wealth Migration">
+    <div class="story-container">
+        <!-- CASE 01: PANAMA -->
+        <article class="case-dossier">
+            <div class="case-visual">
+                <img src="https://images.unsplash.com/photo-1590274853856-f22d5ee3d228?q=80&w=1200&auto=format&fit=crop" alt="Panama Skyline">
             </div>
-            <div class="case-text">
-                <span class="case-category">Capital Migration</span>
-                <h2 class="case-title">The Miller Group Residency Transition</h2>
-                <p class="case-description">
-                    Leveraged InfoTop's proprietary extraction engine to identify high-growth, low-tax jurisdictions. We facilitated the secure movement of $42M in liquid assets while coordinating a seamless transition to a Tier-1 residency-by-investment program.
-                </p>
-                <div class="case-stats">
-                    <div class="stat-item">
-                        <h4>Tax Efficiency</h4>
-                        <p>+34% Improvement</p>
-                    </div>
-                    <div class="stat-item">
-                        <h4>Deployment Time</h4>
-                        <p>82 Days</p>
-                    </div>
+            <div class="case-content">
+                <span class="meta-label">Client: Mr. Li | Shanghai, China</span>
+                <h2 class="case-client">Seamless Residency in Panama</h2>
+                <div class="section-title">The Challenge</div>
+                <p class="challenge-box">Navigating international relocation, banking, and tax compliance can be complex for high-net-worth individuals. Mr. Li needed a fully integrated solution to obtain residency and transfer funds securely.</p>
+                <div class="section-title">AI-Driven Solution</div>
+                <ul class="solution-list">
+                    <li><strong>Residency & Immigration:</strong> AI identified the optimal investor residency program and guided all application steps.</li>
+                    <li><strong>Banking & Fund Transfers:</strong> Secure, compliant channels were used to open local accounts successfully.</li>
+                    <li><strong>Tax & Asset Planning:</strong> Personalized strategy optimized for compliance and wealth preservation.</li>
+                    <li><strong>Service Matching:</strong> Automatically coordinated top-tier legal, financial, and relocation services.</li>
+                </ul>
+                <div class="outcome-banner">
+                    <strong>Operational Outcome</strong>
+                    Within 3 months, Mr. Li obtained residency, completed fund transfers, and implemented a tax-efficient plan.
                 </div>
+                <p class="testimonial">"The AI-guided service made a complex relocation completely effortless."</p>
             </div>
         </article>
 
-        <!-- CASE 02 -->
-        <article class="case-entry">
-            <div class="case-image-wrap">
-                <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1200&auto=format&fit=crop" class="case-image" alt="Corporate Sovereignty">
+        <!-- CASE 02: DUBAI -->
+        <article class="case-dossier">
+            <div class="case-visual">
+                <img src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?q=80&w=1200&auto=format&fit=crop" alt="Dubai Architecture">
             </div>
-            <div class="case-text">
-                <span class="case-category">Corporate Sovereignty</span>
-                <h2 class="case-title">Offshore Infrastructure for Tech-Alpha</h2>
-                <p class="case-description">
-                    Architected a multi-jurisdictional corporate structure for a leading AI research firm. By implementing automated global fund flows and secure identity management, we insulated their intellectual property from domestic regulatory volatility.
-                </p>
-                <div class="case-stats">
-                    <div class="stat-item">
-                        <h4>Operational Freedom</h4>
-                        <p>100% Unrestricted</p>
-                    </div>
-                    <div class="stat-item">
-                        <h4>Compliance Rating</h4>
-                        <p>Grade-A Secure</p>
-                    </div>
+            <div class="case-content">
+                <span class="meta-label">Client: Mr. Ivanov | Moscow, Russia</span>
+                <h2 class="case-client">Effortless Relocation to Dubai</h2>
+                <div class="section-title">The Challenge</div>
+                <p class="challenge-box">Dubai relocation involves complex visa processes, strict banking requirements, and specialized tax optimization for global business owners.</p>
+                <div class="section-title">AI-Driven Solution</div>
+                <ul class="solution-list">
+                    <li><strong>Strategic Selection:</strong> AI selected the best residency visa class based on business operation goals.</li>
+                    <li><strong>Compliant Transfers:</strong> Orchestrated safe, compliant international fund transfers and Dubai bank account setup.</li>
+                    <li><strong>Asset Management:</strong> AI-designed strategy optimized for tax efficiency and cross-border allocation.</li>
+                    <li><strong>Partner Network:</strong> Instant recommendations for the region's top-tier legal and financial partners.</li>
+                </ul>
+                <div class="outcome-banner">
+                    <strong>Operational Outcome</strong>
+                    Within 2 months, Mr. Ivanov secured residency, completed banking transfers, and established his Dubai operations.
                 </div>
+                <p class="testimonial">"Thanks to the AI-driven platform, moving to Dubai was smooth, fast, and stress-free."</p>
             </div>
         </article>
 
-        <!-- CASE 03 -->
-        <article class="case-entry">
-            <div class="case-image-wrap">
-                <img src="https://images.unsplash.com/photo-1454165833767-02a698d1316a?q=80&w=1200&auto=format&fit=crop" class="case-image" alt="Asset Allocation">
+        <!-- CASE 03: URUGUAY -->
+        <article class="case-dossier">
+            <div class="case-visual">
+                <img src="https://images.unsplash.com/photo-1568240030514-6e061803565e?q=80&w=1200&auto=format&fit=crop" alt="Uruguay Coast">
             </div>
-            <div class="case-text">
-                <span class="case-category">AI Engineering</span>
-                <h2 class="case-title">Autonomous Compliance Deployment</h2>
-                <p class="case-description">
-                    Deployed a custom "Digital Brain" for a family office managing diversified global assets. The AI agents monitor cross-border tax compliance in real-time, reducing reliance on traditional legal consultancies by 60%.
-                </p>
-                <div class="case-stats">
-                    <div class="stat-item">
-                        <h4>Overhead Reduction</h4>
-                        <p>$240k / Annum</p>
-                    </div>
-                    <div class="stat-item">
-                        <h4>Audit Accuracy</h4>
-                        <p>99.9% Automated</p>
-                    </div>
+            <div class="case-content">
+                <span class="meta-label">Client: Ms. Emily Thompson | Toronto, Canada</span>
+                <h2 class="case-client">Smooth Relocation to Uruguay</h2>
+                <div class="section-title">The Challenge</div>
+                <p class="challenge-box">Relocation to Uruguay involves complex immigration paperwork, specific banking regulations, and intricate cross-border tax compliance for Canadian entrepreneurs.</p>
+                <div class="section-title">AI-Driven Solution</div>
+                <ul class="solution-list">
+                    <li><strong>Pathway Analysis:</strong> AI analyzed all Uruguayan programs to find the fastest, most secure pathway.</li>
+                    <li><strong>Local Integration:</strong> Secured compliant international transfer channels and local bank account activation.</li>
+                    <li><strong>Optimization:</strong> AI-generated strategy optimized taxes and asset distribution between North and South American jurisdictions.</li>
+                    <li><strong>Resource Coordination:</strong> Direct connection to vetted top-tier legal and relocation experts in Montevideo.</li>
+                </ul>
+                <div class="outcome-banner">
+                    <strong>Operational Outcome</strong>
+                    Within 3 months, Ms. Thompson obtained residency, transferred funds, and launched her local business structure.
                 </div>
+                <p class="testimonial">"The AI platform made relocating to Uruguay effortless. Every detail was handled professionally."</p>
             </div>
         </article>
-
     </div>
 
     <footer>
         &copy; 2024 InfoTop. All Rights Reserved. Private & Confidential.
     </footer>
+
+    <!-- Google Translate Engine -->
+    <div id="google_translate_element"></div>
+
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({ pageLanguage: 'en', autoDisplay: false }, 'google_translate_element');
+        }
+
+        function toggleLangMenu() {
+            document.getElementById('langMenu').classList.toggle('active');
+        }
+
+        function changeLang(langCode) {
+            document.cookie = "googtrans=/en/" + langCode + "; path=/";
+            location.reload();
+        }
+
+        window.onclick = function(event) {
+            if (!event.target.closest('.translate-trigger')) {
+                var menu = document.getElementById('langMenu');
+                if (menu && menu.classList.contains('active')) {
+                    menu.classList.remove('active');
+                }
+            }
+        }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
 </body>
 </html>
