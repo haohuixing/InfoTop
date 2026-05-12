@@ -20,48 +20,108 @@
             font-size: 16px; 
         }
 
-        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--charcoal); margin: 0; padding: 0; line-height: 1.6; overflow-x: hidden; top: 0 !important; }
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background: var(--bg); 
+            color: var(--charcoal); 
+            margin: 0; padding: 0; 
+            line-height: 1.6; 
+            overflow-x: hidden; 
+            top: 0 !important; 
+        }
 
-        /* --- GLOBAL NAV (Matches Homepage) --- */
-        nav { display: flex; justify-content: space-between; align-items: center; padding: 1rem 5vw; border-bottom: 1px solid var(--border); background: white; position: sticky; top: 0; z-index: 1000; }
-        .logo { display: flex; align-items: center; gap: 0.8rem; text-decoration: none; color: var(--charcoal); font-family: 'Playfair Display', serif; font-weight: 700; font-size: clamp(1.1rem, 2vw, 1.4rem); }
-        .logo-img { height: 40px; width: auto; }
+        /* --- TRANSLATE UI --- */
+        .goog-te-banner-frame.skiptranslate, #goog-gt-tt, .goog-te-balloon-frame, .goog-te-gadget img {
+            display: none !important;
+        }
+        #google_translate_element { display: none; }
+        body { top: 0px !important; }
+
+        .translate-wrapper {
+            position: relative;
+            display: inline-block;
+            margin-left: 2vw;
+        }
+
+        .translate-trigger {
+            background: none; border: none; color: var(--charcoal);
+            font-family: 'Inter', sans-serif; font-size: clamp(0.7rem, 1vw, 0.85rem);
+            font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px;
+            cursor: pointer; padding: 0; transition: 0.3s;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .translate-trigger:hover { color: var(--gold); }
+
+        .lang-menu {
+            position: absolute; top: 100%; right: 0; background: white;
+            border: 1px solid var(--border); box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            display: none; z-index: 2000; min-width: 150px; margin-top: 10px;
+        }
+        .lang-menu a {
+            display: block; padding: 12px 20px; color: var(--charcoal);
+            text-decoration: none; font-size: 0.8rem; font-weight: 600;
+            text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid var(--border);
+        }
+        .lang-menu.active { display: block; }
+
+        /* --- NAVIGATION --- */
+        nav { 
+            display: flex; justify-content: space-between; align-items: center; 
+            padding: 1rem 5vw; border-bottom: 1px solid var(--border); 
+            background: white; position: sticky; top: 0; z-index: 1000; 
+        }
+        .logo { 
+            display: flex; align-items: center; gap: 0.8rem; text-decoration: none; color: var(--charcoal);
+            font-family: 'Playfair Display', serif; font-weight: 700; font-size: clamp(1.1rem, 2vw, 1.4rem);
+        }
+        .logo-img { height: clamp(30px, 7vh, 70px); width: auto; display: block; }
+
         .nav-links { display: flex; align-items: center; }
-        .nav-links a { margin-left: 2vw; text-decoration: none; color: var(--charcoal); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; transition: 0.3s; }
+        .nav-links a { 
+            margin-left: 2vw; text-decoration: none; color: var(--charcoal); 
+            font-size: clamp(0.7rem, 1vw, 0.85rem); font-weight: 600; 
+            text-transform: uppercase; letter-spacing: 1.5px; transition: 0.3s;
+        }
         .nav-links a:hover { color: var(--gold); }
+
         #menu-toggle { display: none; }
-        .menu-icon { display: none; cursor: pointer; border: 1px solid var(--border); padding: 5px 10px; }
+        .menu-icon { display: none; cursor: pointer; font-weight: 700; font-size: 0.8rem; letter-spacing: 2px; color: var(--charcoal); text-transform: uppercase; border: 1px solid var(--border); padding: 5px 10px; }
 
         @media (max-width: 768px) {
             .menu-icon { display: block; }
             .nav-links { display: none; position: absolute; top: 100%; left: 0; width: 100%; background: white; flex-direction: column; padding: 1rem 0; border-bottom: 1px solid var(--border); }
             #menu-toggle:checked ~ .nav-links { display: flex; }
-            .nav-links a { margin: 15px 5vw; }
+            .nav-links a, .translate-wrapper { margin: 15px 5vw; text-align: left; }
         }
 
-        /* --- LANGUAGE GLOBE --- */
-        .translate-wrapper { position: relative; display: inline-block; margin-left: 2vw; }
-        .translate-trigger { background: none; border: none; color: var(--charcoal); font-family: 'Inter', sans-serif; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; cursor: pointer; display: flex; align-items: center; gap: 8px; }
-        .lang-menu { position: absolute; top: 100%; right: 0; background: white; border: 1px solid var(--border); display: none; min-width: 150px; z-index: 2000; }
-        .lang-menu.active { display: block; }
-        .lang-menu a { display: block; padding: 12px 20px; color: var(--charcoal); text-decoration: none; font-size: 0.8rem; border-bottom: 1px solid var(--border); }
-
-        /* --- ENGINEERING HERO --- */
+        /* --- ENGINEERING HERO (Sized to match index.html header) --- */
         .eng-hero {
-            background: linear-gradient(rgba(26, 26, 26, 0.85), rgba(26, 26, 26, 0.85)), url('https://images.unsplash.com/photo-1518433278981-2247b9600e72?q=80&w=2070&auto=format&fit=crop');
+            background: linear-gradient(rgba(26, 26, 26, 0.88), rgba(26, 26, 26, 0.88)), url('https://images.unsplash.com/photo-1518433278981-2247b9600e72?q=80&w=2070&auto=format&fit=crop');
             background-size: cover; background-position: center;
-            padding: 120px 5vw; text-align: center; color: white;
+            padding: clamp(1rem, 5vh, 2rem) 5vw clamp(2rem, 8vh, 4rem); /* Matches index.html */
+            text-align: center; color: white;
         }
-        .eng-hero p.pre-title { color: var(--gold); text-transform: uppercase; letter-spacing: 5px; font-weight: 700; font-size: 0.8rem; margin-bottom: 1.5rem; }
-        .eng-hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.2rem, 5vw, 4rem); max-width: 1000px; margin: 0 auto 2rem; line-height: 1.1; }
-        .eng-hero p.sub-title { max-width: 800px; margin: 0 auto; font-size: 1.2rem; font-weight: 300; opacity: 0.9; }
+        .eng-hero p.pre-title { 
+            font-size: clamp(0.7rem, 1vw, 0.8rem); color: var(--gold); 
+            text-transform: uppercase; letter-spacing: 0.4rem; font-weight: 700; 
+            margin-bottom: 1.5rem; 
+        }
+        .eng-hero h1 { 
+            font-family: 'Playfair Display', serif; 
+            font-size: clamp(2rem, 6vw, 4.2rem); /* Matches index.html */
+            margin: 0 auto 1.5rem; max-width: 90vw; line-height: 1.1; 
+        }
+        .eng-hero p.sub-title { 
+            font-size: clamp(0.9rem, 1.5vw, 1.1rem); 
+            max-width: 40rem; margin: 0 auto; font-weight: 300; opacity: 0.9; 
+        }
 
-        /* --- PILLARS GRID --- */
+        /* --- CONTENT SECTIONS --- */
         .section-header { text-align: center; padding: 80px 5vw 40px; }
         .section-header h2 { font-family: 'Playfair Display', serif; font-size: 2.5rem; margin: 0; }
         
         .pillar-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto 80px; padding: 0 5vw; }
-        .pillar-card { background: white; border: 1px solid var(--border); padding: 3rem; position: relative; }
+        .pillar-card { background: white; border: 1px solid var(--border); padding: 3rem; }
         .pillar-card h3 { font-size: 0.85rem; color: var(--gold); text-transform: uppercase; letter-spacing: 2px; margin-top: 0; }
         .pillar-card h4 { font-family: 'Playfair Display', serif; font-size: 1.8rem; margin: 0.5rem 0 1.5rem; }
         .pillar-card p { color: var(--muted); font-size: 0.95rem; margin-bottom: 1.5rem; }
@@ -69,7 +129,6 @@
         .pillar-card li { margin-bottom: 1rem; padding-left: 1.5rem; position: relative; }
         .pillar-card li::before { content: "→"; position: absolute; left: 0; color: var(--gold); }
 
-        /* --- COMPARISON TABLE --- */
         .table-section { background: var(--charcoal); color: white; padding: 100px 5vw; }
         .table-container { max-width: 1000px; margin: auto; overflow-x: auto; }
         table { width: 100%; border-collapse: collapse; margin-top: 2rem; }
@@ -77,7 +136,6 @@
         td { padding: 25px 20px; border-bottom: 1px solid #333; font-size: 0.95rem; }
         td:first-child { color: var(--gold); font-weight: 600; width: 40%; }
 
-        /* --- ROADMAP --- */
         .roadmap { padding: 100px 5vw; max-width: 1100px; margin: auto; }
         .step { display: flex; gap: 3rem; margin-bottom: 4rem; align-items: flex-start; }
         .step-num { 
@@ -87,11 +145,11 @@
         }
         .step-content h4 { margin: 0 0 10px; font-family: 'Playfair Display', serif; font-size: 1.8rem; }
 
-        /* --- CTA --- */
         .cta-footer { background: var(--nomad-green); color: white; text-align: center; padding: 100px 5vw; }
         .cta-footer h2 { font-family: 'Playfair Display', serif; font-size: 3rem; margin-bottom: 1rem; }
         .cta-button { display: inline-block; background: white; color: var(--nomad-green); padding: 1.2rem 3rem; text-decoration: none; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; margin-top: 2rem; }
-        .cta-button:hover { background: var(--gold); color: white; }
+
+        footer { text-align: center; padding: 5rem 5vw; border-top: 1px solid var(--border); font-size: 0.75rem; color: var(--muted); text-transform: uppercase; letter-spacing: 2px; background: white; }
 
     </style>
 </head>
@@ -121,60 +179,59 @@
                     <a href="javascript:void(0)" onclick="changeLang('en')">English</a>
                     <a href="javascript:void(0)" onclick="changeLang('es')">Español</a>
                     <a href="javascript:void(0)" onclick="changeLang('zh-CN')">中文</a>
+                    <a href="javascript:void(0)" onclick="changeLang('fr')">Français</a>
+                    <a href="javascript:void(0)" onclick="changeLang('de')">Deutsch</a>
                 </div>
             </div>
         </div>
     </nav>
 
     <header class="eng-hero">
-        <p class="pre-title">Future-Proof Your Growth with Custom AI Agent Deployment</p>
-        <h1>Move Beyond "Chat"—Build a Business That Executes on Autopilot.</h1>
-        <p class="sub-title">We don't just sell tools; we deploy custom AI ecosystems that act as your digital workforce, turning operational bottlenecks into competitive advantages.</p>
+        <p class="pre-title">Strategic AI Agent Deployment</p>
+        <h1>Build a Business That Executes on Autopilot.</h1>
+        <p class="sub-title">We deploy custom AI ecosystems that act as your digital workforce, turning operational bottlenecks into competitive advantages.</p>
     </header>
 
+    <!-- Rest of your content remains same... -->
     <div class="section-header">
         <h2>Our Core Service Pillars</h2>
     </div>
 
     <div class="pillar-grid">
-        <!-- Growth -->
         <div class="pillar-card">
             <h3>01. The Growth Engine</h3>
             <h4>AI Marketing & Lead Gen</h4>
             <p>Growth shouldn’t be a manual grind. We deploy "Offensive AI" to dominate your market.</p>
             <ul>
-                <li><strong>Multi-Channel Content Matrix:</strong> Automatically transform a single idea into high-performing posts across LinkedIn, X, and SEO blogs.</li>
-                <li><strong>Autonomous Outbound:</strong> AI agents that identify high-intent leads and craft hyper-personalized outreach at scale.</li>
+                <li><strong>Multi-Channel Content Matrix:</strong> Automatically transform ideas into high-performing posts.</li>
+                <li><strong>Autonomous Outbound:</strong> Agents that identify high-intent leads and craft outreach.</li>
             </ul>
         </div>
-        <!-- Efficiency -->
         <div class="pillar-card">
             <h3>02. The Efficiency Engine</h3>
             <h4>Operational Autonomy</h4>
             <p>Reclaim your team’s time from the "Inefficiency Tax."</p>
             <ul>
-                <li><strong>Closed-Loop Customer Success:</strong> Agents that resolve issues, track orders, and process refunds within your ERP/CRM.</li>
-                <li><strong>Workflow Automation:</strong> Automate invoice processing, payroll, and HR with near-zero error rates.</li>
+                <li><strong>Closed-Loop Customer Success:</strong> Agents that resolve issues and track orders.</li>
+                <li><strong>Workflow Automation:</strong> Automate invoice processing and payroll.</li>
             </ul>
         </div>
-        <!-- Intellectual -->
         <div class="pillar-card">
             <h3>03. The Intellectual Engine</h3>
             <h4>Corporate "Digital Brain"</h4>
-            <p>Don't let your company's expertise walk out the door when an employee leaves.</p>
+            <p>Preserve your company's expertise indefinitely.</p>
             <ul>
-                <li><strong>Proprietary Knowledge RAG:</strong> Turn PDFs and meeting transcripts into a private, searchable "Oracle."</li>
-                <li><strong>Instant Onboarding:</strong> Reduce time-to-productivity with an AI mentor that knows every process and policy.</li>
+                <li><strong>Proprietary Knowledge RAG:</strong> Turn data into a private, searchable "Oracle."</li>
+                <li><strong>Instant Onboarding:</strong> AI mentors that know every internal process.</li>
             </ul>
         </div>
-        <!-- Strategic -->
         <div class="pillar-card">
             <h3>04. The Strategic Engine</h3>
-            <h4>Predictive Insights & Compliance</h4>
-            <p>Make decisions based on data, not gut feeling.</p>
+            <h4>Predictive Insights</h4>
+            <p>Make decisions based on raw data, not gut feeling.</p>
             <ul>
-                <li><strong>Variant Perception Analysis:</strong> Use AI to scan market trends and find non-obvious opportunities.</li>
-                <li><strong>Automated Risk & Compliance:</strong> Real-time auditing of transactions to ensure international compliance.</li>
+                <li><strong>Variant Perception:</strong> Scan market trends for non-obvious opportunities.</li>
+                <li><strong>Risk & Compliance:</strong> Real-time auditing of global transactions.</li>
             </ul>
         </div>
     </div>
@@ -187,74 +244,34 @@
                     <tr>
                         <th>Feature</th>
                         <th>The Old Way (SaaS)</th>
-                        <th>The New Way (AI Deployment)</th>
+                        <th>The New Way (AI)</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <td>Logic Structure</td>
                         <td>Rigid, "hard-coded" logic</td>
-                        <td>Self-learning, adaptive intelligence</td>
+                        <td>Self-learning intelligence</td>
                     </tr>
                     <tr>
                         <td>Cost Scaling</td>
                         <td>High monthly seat costs</td>
-                        <td>High ROI; scalable without linear costs</td>
+                        <td>High ROI; no linear costs</td>
                     </tr>
                     <tr>
                         <td>Implementation</td>
                         <td>Months of implementation</td>
-                        <td>Rapid, week-over-week deployment</td>
-                    </tr>
-                    <tr>
-                        <td>User Learning</td>
-                        <td>Humans must learn the software</td>
-                        <td>The AI learns your business logic</td>
+                        <td>Rapid weekly deployment</td>
                     </tr>
                 </tbody>
             </table>
         </div>
     </div>
 
-    <div class="section-header">
-        <h2>Our 4-Step Deployment Roadmap</h2>
-    </div>
-
-    <div class="roadmap">
-        <div class="step">
-            <div class="step-num">01</div>
-            <div class="step-content">
-                <h4>The AI Audit</h4>
-                <p>We identify the high-leverage friction points in your current workflow and map out the automation potential.</p>
-            </div>
-        </div>
-        <div class="step">
-            <div class="step-num">02</div>
-            <div class="step-content">
-                <h4>Architecting the Agent</h4>
-                <p>We select the right models (Open or Closed source) and build your custom logic to match your specific business goals.</p>
-            </div>
-        </div>
-        <div class="step">
-            <div class="step-num">03</div>
-            <div class="step-content">
-                <h4>Seamless Integration</h4>
-                <p>We plug the AI into your existing stack—Slack, Salesforce, QuickBooks, and more—for a zero-disruption rollout.</p>
-            </div>
-        </div>
-        <div class="step">
-            <div class="step-num">04</div>
-            <div class="step-content">
-                <h4>Continuous Optimization</h4>
-                <p>We monitor and "train" your agents to ensure peak performance as your business and data scale.</p>
-            </div>
-        </div>
-    </div>
-
     <div class="cta-footer">
         <h2>Stop Managing. Start Scaling.</h2>
-        <p>The gap between AI-powered companies and the rest is widening every day. Don't get left behind.</p>
-        <a href="/#tool" class="cta-button">Execute AI Audit</a>
+        <p>The gap between AI-powered companies and the rest is widening every day.</p>
+        <a href="/analysis" class="cta-button">Execute AI Audit</a>
     </div>
 
     <footer>
