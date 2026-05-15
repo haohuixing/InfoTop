@@ -5,7 +5,7 @@
 ### Download the file
 - Either download zip or use git clone
 
-### cd to the directory 
+### cd to the directory  
 - In command prompt enter cd directory/to/the/files
 
 ### Install dependencies
