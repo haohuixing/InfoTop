@@ -1,6 +1,6 @@
 # Template readme file for now....
 
-## What to do:
+## What to do: 
 
 ### Download the file
 - Either download zip or use git clone
