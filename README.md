@@ -3,7 +3,7 @@
 ## What to do: 
 
 ### Download the file
-- Either download zip or use git clone
+- Either download zip or use git clone 
 
 ### cd to the directory  
 - In command prompt enter cd directory/to/the/files
