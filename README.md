@@ -6,7 +6,7 @@
 - Either download zip or use git clone  
 
 ### cd to the directory  
-- In command prompt enter cd directory/to/the/files
+- In command prompt enter cd directory/to/the/files 
 
 ### Install dependencies 
 - pip install -r requirements.txt
