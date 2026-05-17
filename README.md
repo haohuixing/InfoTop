@@ -8,7 +8,7 @@
 ### cd to the directory  
 - In command prompt enter cd directory/to/the/files
 
-### Install dependencies
+### Install dependencies 
 - pip install -r requirements.txt
 
 ### Edit .env.example:
